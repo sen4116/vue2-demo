@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <!--
+            v-bind  缩写：:
+            含义：解析变量指定的vue中data数据绑定给标签属性，也可以绑定数据进行js表达式进行解析
+            v-bind 与 mustache（插值语法）的区别在于
+            mustache 用于标签体内容绑定     v-bind 用于标签属性绑定
+
+            如果v-bind绑定的是：style固定死css的属性,或者是class样式名，侧需要加冒号，否则会被vue当作数据解析
+        -->
+
+        <!-- 绑定vue中name值 -->
+        <input type="text" v-bind:value="name"><br/>
+        <!-- 绑定js表达式 -->
+        <input :value="new Date().getDate()">号
+        <!-- 绑定style值从而动态控制样式 -->
+        <div :style="bgColor?'color:red;':'color:green;'">热火队vs凯尔特人</div>
+        <!-- 绑定class值从而动态控制样式 -->
+        <div :class="bgColor?'p':'c'">热火队vs凯尔特人</div>
+
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒',
+                bgColor: true,
+            }
+        })
+    </script>
+</body>
+<style>
+    .p{
+        width: 200px;
+        height: 20px;
+        background-color: rgba(255, 0, 0, 0.832);
+        color: #fff;
+    }
+</style>
+</html>
