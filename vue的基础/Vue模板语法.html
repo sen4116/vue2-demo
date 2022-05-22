@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<script src ='../js/vue.js'></script>
+<body>
+    <div id='root'>
+      {{name}}
+    </div>
+    <!--
+        使用了mustache(模板语法)
+        mustache 渲染流程：
+        1：先解析html文件（容器），在解析js文件，
+        2：当解析到js文件中vue实例对象，会将被挂载的容器重新编译
+        3：将容器中使用到的数据重新渲染
+
+        vue实例跟挂载DOM的关系是 一对一的关系
+
+        如果当只有一个vue实例挂载多个容器，只有第一个容器会被vue接管，剩下的容器不解析
+        如果当只有一个容器被多个vue实例接管，只会被第一个vue实例接管，剩下的vue实例不解析
+
+        mustache 语法 可以使用vue中data的数据，也可以使用js表达式 
+        js表达式 ：一个表达式会产生一个值，可以放在任何一个需要值的地方
+        如  1：let 或 var 声明一个变量
+            2：a+b
+            3：demo() 方法返回值，没有返回值则返回undefined 
+    -->
+  <script>
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        name: '吉米·巴特勒'
+      }
+    })
+  </script>
+</body>
+</html>

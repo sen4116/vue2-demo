@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue2的引用</title>
+	</head>
+	<!-- 引用vue2.0 开发版文件 -->
+	<script src="../js/vue.js"></script>
+	<body>
+		<div id="root">{{name}}</div>
+		<script>
+			
+			const vm = new Vue({
+				el: '#root',
+				data: {
+					name: '吉米·巴特勒'
+				}
+			})
+		</script>
+	</body>
+</html>
