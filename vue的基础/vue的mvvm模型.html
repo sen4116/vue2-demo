@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <!-- 
+          mvvm模型 可以分为三部分理解
+          1：m ：模板（model） 对应的是 vue中data里的数据
+          2：v ：视图（view）  对应的是 vue被挂载的模板
+          3：vm ： 视图模型（viewModel） 对应的是 整个vue实例对象 也就是代码中 new Vue({})
+
+          工作流程：
+           m 的数据通过 vm 的 Data Bindings 进行数据展示在被绑定的 v 视图中展示，
+          而v被用户操作的数据，通过vm DOM Listeners数据监听，返回给m，
+          m 再通过 vm 的 Data Bindings 进行数据展示在被绑定的 v 视图中展示
+
+          data 对象式写法中的数据，最终都会展示在vue实例中
+          vue实例对象所展示的数据都可以在挂载DOM中展示
+       -->
+        <h1>队伍：{{contingent}}</h1>
+        <br>
+        <h1>队员：{{name}}</h1>
+        <br>
+        <h1>{{$emit}}</h1>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒',
+                contingent: '热火队',
+            }
+        })
+        console.log(vm);
+    </script>
+</body>
+
+</html>

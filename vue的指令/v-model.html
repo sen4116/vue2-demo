@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <!-- 
+            v-bind 修改不了vue中data的数据，只能用于vue的单向数据绑定，从vue的data流向页面
+            所以常用于页面数据展示
+        -->
+        单向数据绑定：<input type="text" v-bind:value="name">
+        <!-- 
+            v-model 用于vue的双向数据绑定，能够修改vue的data数据，数据不仅能从data流向页面，也可以从页面流向data
+            v-model一般绑定value属性，所以使用场景为表单雷元素上（如：input，select等标签元素）
+            v-model：value 可以简写为 v-model="值",因为v-model默认绑定value值
+
+            面试题 v-model的实现原理 其实使用v-on和v-bind两个指令 
+            <input v-bind:value="text" v-on:input="text = $event.target.value">
+            简写
+            <input :value="text" @input="text = $event,target.value">
+            执行流程是 v-on 监听 input输入事件，从而获取值，而v-bind是绑定了value属性从显示出来
+         -->
+        <br />
+        双向数据绑定：<input type="text" v-model:value="name">
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒',
+                text: '',
+            }
+        })
+    </script>
+</body>
+
+</html>
