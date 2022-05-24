@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'></div>
+    <script>
+        /**
+         * 在vue中数据绑定的方式的原理就是使用了 Object构造函数中方法defineProperty方法 ( Object.defineProperty() )，
+         * 同时也结合了观察者模式从而实现了数据绑定。
+         * 
+         * 工作流程：当vue实例执行时，被挂载的DOM渲染，Object.defineProperty()的 getter 和 setter 方法就会将使用的数据进行 数据绑定，
+         * 当属性被渲染或是属性值被修改，就会通知页面进行改变
+         * 
+         * Object.defineProperty("修改对象","添加的属性名","配置项对象")
+         * 
+         * Object.defineProperty 和 对象.属性名 = 属性值 的方式创建属性值的区别：
+         * 1.在于后者可以被随意被修改、或者是delete 、可枚举，而前者通过配置项对象可以控制创建的属性是否可以被修改、删除、枚举
+         * 2.后者被直接固定写死了，没有可操作性，而前者可以通过 getter 和 setter 进行数据绑定
+         * */
+
+        let dw = {
+            name: "吉米·巴特勒",
+            key: "热火",
+        }
+        // dw.age = 22;
+        let age = 22;
+        Object.defineProperty(dw, 'age', {
+            // value: 22, //属性值
+            // enumerable: true, // 控制创建属性是否可被枚举   默认值为false 不被枚举
+            // writable: true,// 控制创建属性的值是否可被修改  默认是为false 不被修改   该配置与get方法有冲突
+            // configurable: true,//   控制创建属性的值是否可被删除    默认值为false   不被删除
+
+            //get   整个方法被称之为    getter 当创建的属性被访问，就会调用get方法 有返回值
+            get: function () {
+                console.log("当访问了对象的创建属性，就会执行")
+                //get 方法是有返回值的
+                return age
+            },
+            //set   整个方法被称之为    setter  当创建的属性值被修改，就会调用set方法 可以接收修改值 
+            set: function (value) {
+                console.log("当修改了对象的创建属性值，就会执行")
+                console.log(value);// 修改值
+                age = value;
+            }
+            /**
+             * 可简写
+             * get(){},
+             * set(){},
+             * 
+            */
+        })
+
+        //经过 object.defineProperty() 中 getter 和 setter 就会对 对象中age属性进行数据绑定
+
+        for (let i in dw) { //for in 可以获取对象的属性名
+            console.log(dw[i])
+        }
+        // console.log(Object.keys(dw));
+        //dw.age 这样的方法可以被枚举
+        console.log(dw);
+
+
+    </script>
+</body>
+
+</html>

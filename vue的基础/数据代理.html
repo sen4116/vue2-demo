@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'></div>
+    <script>
+        /**
+         * 数据代理：通过a对象代理b对象中属性，从而对其通过 a 操作 b 中的属性
+         * */
+        let a = { x: 100 }
+        let b = { z: 200 }
+        Object.defineProperty(a,"x",{
+            get(){
+                //将 b 的 x 值 指向 a 的 x 值
+                return a.x
+            },
+            set(value){
+                //若修改 b 的 x 值，则将修改值重新赋值给 a 的 x，当再次访问 b 的 x 值，变为 a 的 x 值
+                a.x = value
+            }
+        })
+    </script>
+</body>
+
+</html>
