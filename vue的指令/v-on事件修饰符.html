@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <!-- 
+            在v-on标签修饰符中
+            1 .prevent: 调用了 event.preventDefault()方法
+            2 .stop: 阻止事件冒泡（事件穿透） event.stopPropagation()方法 事件冒泡 点击子元素的同时触发了父元素事件（由内到外），给子元素添加stop修饰符
+            3 .once: 绑定事件执行一次
+            4 .capture：使用事件捕获模式 事件捕获 点击子元素的同时触发了父元素事件（有外到内），给父元素添加capture修饰符，这样永远会优先执行父元素绑定事件
+         -->
+        <a href="http://baidu.com" @click.prevent="showInFo">A标签默认事件拦截</a>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒'
+            },
+            methods:{
+                showInFo(e){
+                    //e.preventDefault()//js 阻止标签默认事件跳转 
+                    alert("执行了methods属性")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
