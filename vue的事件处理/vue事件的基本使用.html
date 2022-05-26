@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src ='../js/vue.js'></script>
+</head>
+<body>
+  <div id='root'>
+      <h2>{{name}}</h2>
+      <button v-on:click = "showInFo">点击执行vue中methods属性</button>
+      <button @click = "showInFo2(666,$event)">点击执行vue中methods属性2</button>
+  </div>
+  <script> 
+    new Vue({
+      el: '#root',
+      data: {
+        name: '吉米·巴特勒'
+      },
+      methods:{
+        /**
+         * v-on：执行事件绑定
+         * 简写 @:click="事件名/方法名"
+         * 
+         * 当方法没有传参数，而方法有接受的形参，此时在方法打印接受的形参是event，是整个调用事件的元素对象。
+         * 此时methods方法中的this指向对象是Vue实例对象，若把方法写成箭头函数，this的指向会跳过Vue，直接指向windows对象 
+         * 
+         * 想要方法传参数，只需要在绑定事件名后添加(),当添加实参后，Vue会默认取消event对象传递，想要有只需要在括号中添加$event关键词占位
+         * 如：@click = "showInFo(66,$event)"
+         * 
+         * 事件的回调需要写在methods属性中，最终会出现在vue实例对象上。
+         * methods属性中配置的函数，都是被vue所管理的函数，所以this所指向是Vue实例对象，或者是组件实例对象
+        */
+        showInFo(event){
+            console.log(event)//调用方法的元素对象
+            alert("执行了methods属性")
+        },
+        showInFo2(num,e){
+            console.log(num)
+            console.log(e)//调用方法的元素对象
+            alert("执行了methods属性2")
+        }
+      }
+    })
+  </script>
+</body>
+</html>
