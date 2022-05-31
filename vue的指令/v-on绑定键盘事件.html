@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <!-- 
+            1. vue中常用的按键别名：
+                回车 => enter
+                删除 => delete （获取"删除"和"退格"键）
+                退出 => esc
+                空格 => space 
+                换行 => tab (特殊必须配合keydown使用)
+                上 => up
+                下 => down
+                左 => left
+                右 => right 
+            
+            2. vue未提供别名按键，可以使用原始的key值绑定，但是需要注意命名的转换 用短横线命名  如CapsLock => caps-lock
+            
+            3. 系统修饰键（用法特殊）：ctrl、alt、shift、meta（win键）
+                (1)配合keyup使用：按下修饰键的同时，再按下其他键，随后释放其他键，绑定事件才触发。
+                (2)配合keydown使用：正常触发事件。
+
+            4. Vue.config.keyCodes.自定义键名 = 键码     可以自定义按键名
+         -->
+        <input type="text" placeholder="绑定键盘按下回车才执行事件" @keydown="KD">
+        <input type="text" placeholder="绑定键盘按下回车才执行事件" @keydown.delete="KD">
+        <input type="text" @keyup.caps-lock="KD">
+        <input type="text" placeholder="绑定系统修饰键" @keydown.uic="KD">
+
+
+    </div>
+    <script>
+        Vue.config.keyCodes.uic = 65
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒'
+            },
+            methods: {
+                KD(e) {
+                    // 
+                    
+                    console.log(e.key +"===>"+e.keyCode)
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>
