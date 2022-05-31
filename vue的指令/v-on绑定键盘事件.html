@@ -22,7 +22,7 @@
                 右 => right 
             
             2. vue未提供别名按键，可以使用原始的key值绑定，但是需要注意命名的转换 用短横线命名  如CapsLock => caps-lock
-            
+
             3. 系统修饰键（用法特殊）：ctrl、alt、shift、meta（win键）
                 (1)配合keyup使用：按下修饰键的同时，再按下其他键，随后释放其他键，绑定事件才触发。
                 (2)配合keydown使用：正常触发事件。
@@ -33,6 +33,8 @@
         <input type="text" placeholder="绑定键盘按下回车才执行事件" @keydown.delete="KD">
         <input type="text" @keyup.caps-lock="KD">
         <input type="text" placeholder="绑定系统修饰键" @keydown.uic="KD">
+        <!-- 只用 ctrl + y 才执行事件 -->
+        <input type="text" placeholder="绑定系统修饰键" @keyup.ctrl.y="KD">
 
 
     </div>

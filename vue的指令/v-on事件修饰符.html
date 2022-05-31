@@ -61,6 +61,9 @@
         <!-- 阻止事件冒泡 .stop-->
         <div class="demo1" @click="showInFo">
             <button @click.stop="showInFo">阻止事件冒泡</button>
+            <!-- 即阻止冒泡，也阻止跳转 -->
+            <a href="https://baidu.com" @click.stop.prevent="showInFo">阻止事件冒泡</a>
+
         </div>
         <!-- 事件只会触发一次 .once-->
         <div class="demo2">
