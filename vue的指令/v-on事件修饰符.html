@@ -5,6 +5,43 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <script src='../js/vue.js'></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .demo1 {
+            height: 100px;
+            background-color: rgb(14, 238, 238);
+        }
+
+        .demo2 {
+            height: 100px;
+            background-color: rgb(14, 238, 126);
+        }
+
+        .box1 {
+            height: 100px;
+            background-color: rgb(188, 227, 31);
+        }
+
+        .box2 {
+            height: 50px;
+            background-color: rgb(21, 21, 163);
+        }
+
+        .demo6 {
+            height: 300px;
+            background-color: blue;
+            overflow: scroll;
+        }
+
+        .item {
+            height: 200px;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -15,8 +52,40 @@
             2 .stop: 阻止事件冒泡（事件穿透） event.stopPropagation()方法 事件冒泡 点击子元素的同时触发了父元素事件（由内到外），给子元素添加stop修饰符
             3 .once: 绑定事件执行一次
             4 .capture：使用事件捕获模式 事件捕获 点击子元素的同时触发了父元素事件（有外到内），给父元素添加capture修饰符，这样永远会优先执行父元素绑定事件
-         -->
+            5 .self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。只有event.target是当前操作元素才触发事件。 事件冒泡只会触发父盒子的事件，但是 $event 当前操作元素还是指向子元素
+            6 .passive -  以 { passive: true } 模式添加侦听器   事件的默认行为立即执行，无需等到事件回调执行完毕
+        -->
+        <!-- 阻止标签默认事件 .prevent-->
         <a href="http://baidu.com" @click.prevent="showInFo">A标签默认事件拦截</a>
+        <br>
+        <!-- 阻止事件冒泡 .stop-->
+        <div class="demo1" @click="showInFo">
+            <button @click.stop="showInFo">阻止事件冒泡</button>
+        </div>
+        <!-- 事件只会触发一次 .once-->
+        <div class="demo2">
+            <button @click.once="showInFo">点击事件只会触发一次</button>
+        </div>
+        <!-- 使用事件捕获事件 .capture  在事件冒泡的执行过程中，先使用事件捕获，后有事件冒泡。 capture就是只让事件冒泡执行到事件捕获时返回-->
+        <div class="box1" @click.capture="showInFo(2)">
+            box1
+            <div class="box2" @click="showInFo(1)">
+                box2
+            </div>
+        </div>
+        <!--只有是当前操作元素才会执行 .self 想只有自己的事件不被外部干扰，就添加 self-->
+        <div class="demo1" @click.self="showInFo">
+            <button @click="showInFo">阻止事件冒泡</button>
+        </div>
+
+        <!-- .passive 不用等事件回调完毕， 直接执行事件默认行为  wheel使用passive后没有等绑定事件执行完毕，直接执行事件默认行为-->
+        <ol class="demo6" @wheel.passive="demo6">
+            <li class="item">1</li>
+            <li class="item">2</li>
+            <li class="item">3</li>
+            <li class="item">4</li>
+            <li class="item">5</li>
+        </ol>
     </div>
     <script>
         const vm = new Vue({
@@ -24,10 +93,19 @@
             data: {
                 name: '吉米·巴特勒'
             },
-            methods:{
-                showInFo(e){
+            methods: {
+                showInFo(e) {
                     //e.preventDefault()//js 阻止标签默认事件跳转 
-                    alert("执行了methods属性")
+                    if (e != 1 && e != 2) {
+                        alert("执行了methods属性")
+                    } else {
+                        alert(e)
+                    }
+                },
+                demo6() {
+                    for (let i = 0; i < 1000000; i++) {
+                        console.log(i)
+                    }
                 }
             }
         })
