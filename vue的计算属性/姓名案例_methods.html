@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <input type="text" v-model="team">
+        <br><br>
+        <input type="text" v-model="name">
+        <br><br>
+        <!-- 全名：{{team}}-{{name}} -->
+        全名：{{fullName()}}
+        <!-- 当data中数据被修改，在插值语法中使用methods里方法，就会重新解析 -->
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒',
+                team: '热火队'
+            },
+            methods: {
+                fullName() {
+                    // return [1,2,3]
+                    return this.name + '-' + this.team
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
