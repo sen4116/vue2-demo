@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <h1>今天天气很{{info}}</h1>
+        <br>
+        <button @click="isHot = !isHot">切换天气</button>
+        <br>
+        <button @click="numbers.a++">点击a+{{numbers.a}}</button>
+        <br>
+        <button @click="numbers.b++">点击b+{{numbers.b}}</button>
+        <br>
+        <button @click="add">点击arr b+{{arr[0]}}</button>
+        <br>
+        <button @click="addObj">点击添加numbers的新对象{{numbers.c}}</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                isHot: true,
+                numbers: {
+                    a: 1,
+                    b: 1,
+                },
+                arr: [0, 1, 2]
+                // arr: [
+                //     {
+                //         a: 1
+                //     },
+                //     {
+                //         b: 2
+                //     }]
+            },
+            computed: {
+                info() {
+                    return this.isHot ? '凉爽' : '炎热'
+                }
+            },
+            watch: {
+                isHot: {
+                    // immediate: true,
+                    handler(newValue, oldValue) {
+                        console.log('监听属性启动了，新值' + newValue + ',旧值' + oldValue)
+                    }
+                },
+                info: {
+                    handler(newV, oldV) {
+                        console.log(this)
+                        console.log('监听计算属性启动了，新值' + newV + ',旧值' + oldV)
+
+                    }
+                },
+                /**
+                 * vue实例中被监听的属性值的类型为string
+                 * 监听多层结构的某个属性变化值
+                 * */
+                'numbers.a': {
+                    handler(n, o) {
+                        console.log(n)
+                    }
+                },
+                /**
+                 * 监听属性中的 deep 属性 默认为false，不开启监听数据递归，  true 开启监听数据递归
+                 * */
+                numbers: {
+                    deep: true,
+                    handler(n, o) {
+                        console.log(n)
+                    }
+                },
+                /**
+                 * 一、vue监听数组的变化：
+                 * 
+                 *      1、vue能够监听数组变化的场景
+                 *          【1】通过赋值的形式改变正在被监听的数组；
+                 *          【2】通过splice(index,num,val)的形式改变正在被监听的数组；
+                 *          【3】通过数组的push的形式改变正在被监听的数组；
+                 * 
+                 *      2、vue无法监听的数组变化的场景
+                 *          【1】通过数组索引改变数组元素的值；
+                 *          【2】改变数组的长度；
+                 * 
+                 *      3、VUE解决无法监听数组变化的方法
+                 *          【1】this.$set(arr, index, newVal);
+                 *          【2】通过splice（index，num，val）
+                 *          【3】使用临时变量作为中转，重新赋值数组
+                 * 
+                 * 
+                 * 二、vue监听对象的变化
+                 * 
+                 *      1、vue能够监听到对象变化的场景
+                 *          【1】通过直接赋值的场景。eg：watchObj = {name:"zyk"}
+                 * 
+                 *      2、vue无法监听到对象变化的场景
+                 *          【1】对象的增加、删除、无法被vue监听到,如果是修改原有监听属性开启deep是可以监听到的
+                 * 
+                 *      3、VUE解决无法监听对象变化的方法
+                 *          【1】使用 this.$set(object, key, value)（vue 无法监听 this.set 修改原有属性）
+                 *          【2】使用Object.assign('目标对象','被合并对象'),    -----------直接赋值的原理；（推荐使用）
+                 *              如果被合并对象中的值跟目标对象中的值属性名一致，那么被合并对象数据会覆盖目标对象的数据，
+                 *              返回值是目标对象
+                 *          
+                 * 
+                 * this.someObject = Object.assign({},someObject,value)
+                 * 原理：把一个新的完整对象赋值给data中的某个属性，Vue会遍历这个对象内的所有属性，
+                 * 并通过Object.defineProperty,将这些property全部转化为getter/setter从而实现对属性的监听。
+                 * 直接通过this.someObject.property无法监听到的原因：对象是引用类型的 
+                 * 所以this.someObject.property对于这个对象来说只是改变了该对象的值，并没有改变这个对象的引用，
+                 * 所以Vue无法监听到该对象的变化，所以也就无法对其新增的属性进行监听。
+                 * 而 Object.assign({},someObject,value)相当于将一个新的对象赋值给这个属性，
+                 * 即改变了这个对象的引用 所以Vue监听到了这个对象的变化，从而对这个对象中的所有属性进行遍历，
+                 * 增加getter/setter进行监听。 
+                 * tips：Vue3.0之后使用Proxy对对象进行监听将不再存在这个问题
+                 * 
+                 * 
+                 * */
+                arr: {
+                    deep: true,
+                    handler(n, o) {
+                        console.log('监听数组开始了')
+                        console.log(n)
+                    }
+                }
+            },
+            methods: {
+                //对象的增删改
+                addObj() {
+                    //增 监听不了
+                    // this.numbers.c = 1 
+                    this.numbers = Object.assign({}, this.numbers, {
+                        m: 1
+                    })
+                    //删 
+                    delete this.numbers.c
+                    //改
+                    // this.numbers.a = 2
+
+                    // this.numbers.a++
+                    console.log(this.numbers);
+                },
+                add() {
+                    this.arr[0]++
+                    console.log(this.arr[0])
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
