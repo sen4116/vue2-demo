@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <h1>今天天气很{{info}}</h1>
+        <br>
+        <button @click="isHot = !isHot">切换天气</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                isHot: true
+            },
+            computed: {
+                info() {
+                    return this.isHot ? '凉爽' : '炎热'
+                }
+            },
+            /**
+             * 监视属性 watch 监听数据改变触发的方法 可以监听data中的数据，也可以监听computed 中创建的计算属性
+             * 
+             * 需要监听的属性必须存在，才能进行监听，但是不会报错，只会显示为undefined
+             * immediate 默认为false 当为true时，页面数据初始化时让handler方法调用一下
+             * handler 在监听数据被修改是调用该函数
+             * */
+
+            // 第一种写法 在 new vue 配置项中写
+            watch: {
+                // 正常写法
+                // isHot: {
+                //     immediate: true,
+                //     handler(newValue, oldValue) {
+                //         console.log('监听属性启动了，新值' + newValue + ',旧值' + oldValue)
+                //     }
+                // },
+                info: {
+                    handler(newV, oldV) {
+                        console.log(this)
+                        console.log('监听计算属性启动了，新值' + newV + ',旧值' + oldV)
+
+                    }
+                },
+                // 简写 当只用于handler这个方法的时候就可以简写，多添加配置项都不行
+                isHot(newValue, oldValue) {
+                    console.log(newValue + "简写")
+                }
+            }
+        })
+        //第二种 用vue实例方法中写监听属性
+        vm.$watch('info', {
+            handler() {
+                console.log('监听计算123属性启动了')
+            }
+        })
+        // 实例监听简写
+        vm.$watch('info', function (newValue, oldValue) {
+            console.log('实例监听属性简写')
+        })
+        console.log(vm);
+    </script>
+</body>
+
+</html>

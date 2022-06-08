@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <input type="text" v-model="firstName">
+        <br>
+        <input type="text" v-model="lastName">
+        <br>
+        {{fullName}}
+    </div>
+    <script>
+        /**
+         * computed 和 watch 的区别
+         *  1.computed 支持数据缓存，watch 不支持
+         *  2.watch 支持异步操作，computed 不支持
+         *  3.computed 绑定属性不存在于 vue实例data声明，watch 绑定属性需要在 vue实例data中声明
+         *  4.监听的逻辑有差异. 这一点从使用时就特别明显, 监听属性是目标值变了,它去执行函数.而计算属性是函数的值变了, 它重新求值.
+         *  5.页面刷新以后, 计算属性会默认立即执行, 而watch属性则需要我们自己配置
+         * 使用场景
+         * 当一个值受多个属性影响的时候--------> 使用计算属性(购物车)
+         * 当一条数据的更改影响到多条数据的时候-------> 使用监听属性（搜索框）
+         * 
+         * 
+         *  ✨✨✨
+         *  1.所被 Vue管理的函数，最好写成普通函数，这样保证this指向是vue实例 或是组件实例对象
+         *  2.所有不被 Vue管理的函数（定时器回调函数，promis的回调函数），最好写成箭头函数，这样this指向才会是vue实例 或者是组件实例对象
+         * */
+
+        const vm = new Vue({
+            el: '#root',
+            //属性
+            data: {
+                firstName: 'kobe',
+                lastName: '科比',
+                fullName: ''
+            },
+            watch: {
+                firstName(n) {
+                    this.fullName = n + this.lastName
+                },
+                lastName(n) {
+                    this.fullName = this.firstName + n
+                }
+            }
+        })
+        console.log(vm)
+    </script>
+</body>
+
+</html>
