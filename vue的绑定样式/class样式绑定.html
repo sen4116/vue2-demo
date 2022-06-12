@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <!-- class绑定样式 -----字符串方式。使用场景：样式名不确定，需要动态指定-->
+        <div @click="setBgc1" class="childBox" :class="r">
+            {{name}}
+        </div>
+        <!-- class绑定样式 -----数组方式。使用场景：要绑定样式名不确定、样式名个数不确定-->
+        <div @click="setBgc2" class="childBox" :class="bgcArr">
+            {{name}}
+        </div>
+        <!-- class绑定样式 -----对象方式。使用场景：要绑定样式名确定、样式名个数确定，但是决定是否使用-->
+        <!-- 对象的key命名必须跟 style标签中一样 -->
+        <div @click="setBgc3" class="childBox" :class="bgcObj">
+            {{name}}
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒',
+                r: '',
+                bgcArr: ['red', 'green', 'yellow'],
+                bgcObj: {
+                    red: false,
+                    green: true,
+                }
+            },
+            methods: {
+                // class字符串方式
+                setBgc1() {
+                    this.r = 'red'
+                },
+                // class数组方式
+                setBgc2() {
+                    if (this.bgcArr.length) {
+                        if (this.bgcArr[0] == 'red') { 
+                            this.bgcArr.pop() 
+                        } else {
+                            this.bgcArr.shift()
+                        }
+                    }else{
+                        this.bgcArr = ['yellow', 'green', 'red']
+                    }
+                },
+                //class对象方式
+                setBgc3(){
+                    this.bgcObj.red = !this.bgcObj.red
+                    this.bgcObj.green = !this.bgcObj.green
+                }
+            },
+        })
+    </script>
+</body>
+<style>
+    .childBox {
+        width: 200px;
+        height: 200px;
+        border: 1px solid rgb(7, 7, 7);
+        color: #000;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .green {
+        background-color: green;
+    }
+
+    .yellow {
+        background-color: yellow;
+    }
+</style>
+
+</html>
