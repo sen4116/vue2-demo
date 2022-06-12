@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src ='../js/vue.js'></script>
+</head>
+<body>
+    <!-- 
+        v-if&v-show绑定数据中（直接受布尔值），数据是布尔值就会直接进行操作，数据是变量就回去vue实例的data寻找，数据是表达式就会直接执行
+        v-show: 只是控制DOM元素的display ： none，DOM节点还在 
+        v-if: 直接删除绑定DOM节点，DOM元素可能会获取不到
+        v-else-if: 在使用的前提是必须得有v-if，想要所有得v-else-if生效就必须得代码不能断节，
+        v-else: 当if判断结果为true，那么v-else不执行判断，不做显示
+        template 可以做到不更改页面布局，做到对块级html代码进行管理，跟v-show不生效，只能配合v-if进行使用
+
+
+        v-if & v-show 的使用场景
+        v-show：使用在切换频率高的场景
+        v-if： 使用在切换频率低的场景
+     -->
+  <div id='root' >
+    <h1 v-show="judge">
+        {{name}}
+    </h1>
+    <button @click = "judge = !judge" >名字显示/隐藏</button>
+
+    <h2 v-if="judge">
+        {{name}}
+    </h2>
+
+    <button @click="n++">n++</button>
+    <div v-if="n == 1">Angular</div>
+    <div v-else-if="n == 2">React</div>
+    <div v-else="n == 3 ">Vue</div>
+    <template v-if="n > 5">
+        <h1>我是一个感性的人</h1>
+        <h1>但是为人处事</h1>
+        <h1>得让理性占领感性的上风</h1>
+    </template>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        judge: true,
+        name: '吉米·巴特勒',
+        n:1
+      }
+    })
+  </script>
+</body>
+<style>
+
+</style>
+</html>
