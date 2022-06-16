@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <!-- 
+            v-for指令：
+                1.用于展示列表数据，
+                2.语法： v-for="(item,index) in 遍历对象" :key = "遍历子元素绑定唯一值",
+                3.可以遍历数组、对象、字符串、指定次数
+         -->
+         <!-- 
+            遍历数组：接受两个形参，第一个为数组的数据，第二个为数组数据的索引值
+          -->
+        <h2>nba名宿---数组遍历</h2>
+        <ul>
+            <li v-for="(item,index) in persons" :key="item.id">
+                {{item.name}}-{{item.age}}
+            </li>
+        </ul>
+
+        <!-- 
+            遍历对象：接受两个形参，第一个为value值，第二个为key名（属性名）
+         -->
+        <h2>car---对象遍历</h2>
+        <ol>
+            <li v-for="(item,index) in car " :key="index">
+                {{item}} --- {{index}}
+            </li>
+        </ol>
+
+        <!-- 
+            遍历字符串：接受两个形参，第一个为组成字符串的单个字符串，第二个为当前单个字符串的索引值
+         -->
+        <h2>字符串遍历</h2>
+        <ol>
+            <li v-for="(item,index) in str" :key="index">
+                {{item}} --- {{index}}
+
+            </li>
+        </ol>
+
+        <!-- 
+            遍历指定次数，接受两个形参，第一个为被遍历指定次数，以1为开头，第二个参数为遍历数的索引值，
+         -->
+        <h2>测试遍历指定次数</h2>
+        <ul>
+            <li v-for="(item,index) in 10" :key="index">
+                {{item}} --- {{index}}
+
+            </li>
+        </ul>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                persons: [
+                    {
+                        id: '001',
+                        name: '吉米巴特勒',
+                        age: '25'
+                    },
+                    {
+                        id: '002',
+                        name: '斯蒂芬库里',
+                        age: '23'
+                    },
+                    {
+                        id: '003',
+                        name: '科比布莱恩德',
+                        age: '23'
+                    },
+                    {
+                        id: '004',
+                        name: '勒布朗詹姆斯',
+                        age: '23'
+                    }
+                ],
+                car: {
+                    name: '奔驰',
+                    money: '50w',
+                    color: '粉色'
+                },
+                str: 'hello world'
+            }
+        })
+    </script>
+</body>
+
+</html>

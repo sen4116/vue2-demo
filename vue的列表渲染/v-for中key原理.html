@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <!-- 
+            vue中for循环的key有什么作用？
+
+            1.虚拟DOM中key的作用：
+                key是虚拟DOM对象的标识，当状态中的数据发生变化时，Vue会根据【新数据】生成【新的虚拟DOM】
+                随后Vue进行【新虚拟DOM】与【旧虚拟DOM】的差异比较，比较规则如下：
+
+                虚拟DOM对比规则：
+
+                    1.旧虚拟DOM中找到了与新虚拟DOM相同的key
+                        1.)若虚拟DOM中内容没有变化，直接使用之钱的真实DOM!
+                        2.)若虚拟DOM中内容有变化，则生成新的真实DOM，随后替换页面中之间的真实DOM
+
+                    2.旧虚拟DOM中未找到与新虚拟DOM相同key
+                        创建新的真实DOM，随后渲染到页面。
+
+            2.用index 作为key可能引发的问题
+
+                1.若对数据进行：逆序添加、逆序删除等破环顺序操作：
+                    会产生没有必要的真实DOM更新 ===> 界面效果没有问题，但是效率低
+
+                2.如果结构中还包含输入类的DOM
+                    会产生错误DOM更新 ===> 界面有问题
+
+            3.开发中如何选择key？
+                1.最好使用每条数据的唯一标识（前提条件，这个唯一标识循环中的每一条数据都有）。
+                2.如果不存在对数据的顺序进行破环的操作，使用index作为key也是可以的
+         -->
+        <h2>nba名宿---数组遍历</h2>
+
+        <button @click="add">添加一个杜兰特</button>
+        <button @click="setDelete">删除一个杜兰特</button>
+        <button @click="insertion">插入一个杜兰特</button>
+
+        <ul>
+            <li v-for="(item,index) in persons" :key="item.id">
+                {{item.name}}-{{item.age}}
+                <input />
+            </li>
+        </ul>
+
+
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                persons: [
+                    {
+                        id: '001',
+                        name: '吉米巴特勒',
+                        age: '25'
+                    },
+                    {
+                        id: '002',
+                        name: '斯蒂芬库里',
+                        age: '23'
+                    },
+                    {
+                        id: '003',
+                        name: '科比布莱恩德',
+                        age: '23'
+                    },
+                    {
+                        id: '004',
+                        name: '勒布朗詹姆斯',
+                        age: '23'
+                    }
+                ],
+                countKey: [],
+            },
+            methods: {
+                judge(c) {
+                    if (c) {
+                        this.countKey.unshift(c)
+                    }
+                    // forEach、map、都不可以跳出循环
+                    let count = 0, jia = false
+                    console.log(this.persons)
+                    //for of 循环没有index值（数组索引值）
+                    for (let i of this.persons) {
+                        console.log(i)
+                        if (i.id == '005') {
+                            return {
+                                count,
+                                key: true
+                            }
+                        }
+                        count++
+                    }
+
+                },
+                add() {
+                    const p = {
+                        id: '005',
+                        name: '凯文杜兰特',
+                        age: '18'
+                    }
+                    let i = this.judge()
+                    if (!i) {
+                        this.persons.unshift(p)
+                        alert('添加成功')
+                    } else if (i.key) {
+                        alert('只有一个杜兰特')
+                    } 
+                },
+                setDelete() {
+                    let i = this.judge()
+                    console.log(i)
+                    if (!i) {
+                        alert('杜兰特还没有出生')
+                    } else if (this.countKey[0]) {
+                        this.persons.splice(this.countKey[0], 1)
+                        this.countKey = []
+                        alert('删除成功1')
+                    } else if (i.key) {
+                        this.persons.splice(i.count, 1)
+                        alert('删除成功2')
+                    }
+                },
+                insertion() {
+                    const p = {
+                        id: '005',
+                        name: '凯文杜兰特',
+                        age: '18'
+                    }
+                    let i = this.judge(2)
+                    console.log(i)
+                    if (!i) {
+                        this.persons.splice(2, 0, p)
+                        alert('插入成功')
+                    } else if (i.key) {
+                        alert('只有一个杜兰特')
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
