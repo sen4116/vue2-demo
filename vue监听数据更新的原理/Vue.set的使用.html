@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <!-- 
+        Vue.set(target,index/propertyName,value): 操作新增数据
+        target: 可以是对象，或者是数组
+        当目标是数组时，第二个形参为index；当目标是对象时，第二个形参为propertyName(属性名)
+        value: 属性值
+
+        ✨✨✨
+        不能将 vue实例或是 vue实例根数据对象 ，使用 Vue.set
+        因为vue实例或是vue实例根数据对象不是响应式对象
+     -->
+    <div id='root'>
+        {{name}} --- {{gongzuo}}---{{duiwu.key}}---{{duiwu.old}}
+        <br>
+        <ol>
+            <li v-for="(p,index) in friends" :key="index">
+                {{p.name+'----'+p.duiwu}}
+                <span v-if="p.gongzuo">----{{p.gongzuo}}</span>
+            </li>
+        </ol>
+        <button @click="setObj">
+            新增对象属性
+        </button>
+    </div>
+    <script>
+        Vue.config.productionTip = false; //阻止 vue在启动生产环境的提醒
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒',
+                gongzuo: 'nab',
+                duiwu: {
+                    key: '热火',
+                },
+                friends: [{
+                    name: '库里',
+                    duiwu: '勇士',
+                },
+                {
+                    name: '詹姆斯',
+                    duiwu: '湖人'
+                },
+                {
+                    name: '欧文',
+                    duiwu: '篮网'
+                }
+                ]
+            },
+            methods: {
+                setObj(){
+                    console.log(this)
+                    // Vue.set(this.duiwu,'old','76')//在vue中 添加对象属性值
+                    Vue.set(this.friends,3,{
+                        name: '迈克尔·乔丹',
+                        duiwu:'公牛'
+                    })
+                    // 给数组添加对象数据
+                }
+            },
+        })
+        vm.$set(vm._data.friends[1],'gongzuo','学生') //实例对象 添加对象属性值
+    </script>
+</body>
+
+</html>

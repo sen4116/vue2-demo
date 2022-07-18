@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>人员列表</h2>
+        <button @click="updateKL">更新库里信息</button>
+        <ul>
+            <li v-for="(p,index) in persons" ::key="p.id">
+                {{p.name+'----'+p.age}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                persons: [
+                    {
+                        id: '001',
+                        name: '吉米巴特勒',
+                        age: '25'
+                    },
+                    {
+                        id: '002',
+                        name: '斯蒂芬库里',
+                        age: '23'
+                    },
+                    {
+                        id: '003',
+                        name: '科比布莱恩德',
+                        age: '23'
+                    },
+                    {
+                        id: '004',
+                        name: '勒布朗詹姆斯',
+                        age: '23'
+                    }
+                ],
+            },
+            methods: {
+                updateKL(){
+                    // this.persons[1] = {
+                    //     id: '002',
+                    //     name: '戴森库里',
+                    //     age: '22'
+                    // }
+                    // vue 无法监听数组通过索引更新修改后值
+                    this.persons[1].name = "戴森库里",
+                    this.persons[1].age = '22'
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

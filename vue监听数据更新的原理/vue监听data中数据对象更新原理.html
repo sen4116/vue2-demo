@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src ='../js/vue.js'></script>
+</head>
+<body>
+    <!-- 
+        vue 底层对于对象数据进行监听 步骤如下：
+        第一步：将vue中data的对象数据，每一个属性创建对应的get、set方法进行加工；
+        第二步：将vue中data赋值给vm ===> vm._data = data;
+        每当vue中data数据被修改时，就会调用相对应的属性set、get方法，从而达到页面数据响应式的效果,
+        只有当data对象数据中属性值不在是对象时，就不会再去代理数据
+     -->
+  <div id='root'>
+    {{name}} 
+    
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        name: '吉米·巴特勒'
+      }
+    })
+  </script>
+</body>
+</html>

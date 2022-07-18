@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入查询内容" v-model="getValue">
+        <ul>
+            <li v-for="(p,index) in filPersons" :key="p.id">
+                {{p.name+'-'+p.age+'-'+p.sex}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                getValue: '',
+                persons: [
+                    {
+                        id: '001',
+                        name: '马冬梅',
+                        age: '19',
+                        sex: '女'
+                    },
+                    {
+                        id: '002',
+                        name: '周冬雨',
+                        age: '18',
+                        sex: '女'
+                    },
+                    {
+                        id: '003',
+                        name: '周杰伦',
+                        age: '21',
+                        sex: '男'
+                    },
+                    {
+                        id: '004',
+                        name: '温兆伦',
+                        age: '20',
+                        sex: '男'
+                    }
+                ],
+                filPersons: []
+            },
+            /**
+             * 代码执行思路：使用watch监听属性，将监听属性的设置项immediate 设置为true，初始化就执行handler，
+             * 当val为''(空)时，就会匹配所有项，将所有项返回给filPersons，
+             * 当输入框有值输入时就会进行匹配，匹配成功就会返回匹配成功的对象
+             * 没有找到匹配项，就会返回空数组
+             * */ 
+            watch: {
+                getValue: {
+                    immediate : true,
+                    handler(val) {
+                        console.log(val)
+                        //watch属性有方法有两个参数，新值和旧值
+                        this.filPersons = this.persons.filter((p) => {
+                            return p.name.includes(val)
+                        })
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

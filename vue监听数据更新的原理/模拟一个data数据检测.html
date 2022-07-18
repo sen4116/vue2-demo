@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+
+    </div>
+    <script>
+        /**
+         * 如果单单只用一个object.defineProperty 去监听data数据 
+         * ===> object.defineProperty(data,'name',{get(){return data.name},set(val){data.name = val}})
+         * 这样就会造成无限回调，当访问data中name数据，就会触发object.defineProperty的get方法，return 返回 data.name 
+         * 又会重复触发object.defineProperty中的get方法，set方法也会如此 无限回调
+         * 
+         * 所以在vue的底层逻辑中，创建一个观察者实例对象，对vue中data数据进行了数据代理。
+         * 主要逻辑：
+         * 1.不在原数据上进行数据监听，以免形成无限回调。
+         * 2.创建一个实例对象对于vue的data进行监听，在vue源码中不管data数据有几层对象包裹或者是数组包裹着，
+         * 它都会进行递归操作，直到当前数据不再是对象才停止数据代理，
+         * 3.每层属性值都会有单独的get、set方法
+         * 
+         * 
+         * 为什么vue无法监听对象的属性值改变？
+         * 原因在于对象是引用类型，在原型链上你只是改变了对象的value值，没有改变对象的key，
+         * 所以Vue无法监听到该对象的变化，所以也就无法对其新增的属性进行监听。
+         * 
+        */
+        let data ={
+            name: '吉米·巴特勒'
+        }
+
+        const obs = new Observer(data);
+        //准备一个vm的实例对象
+        let vm = {};
+        vm._data = data = obs;
+        // console.log(data)
+        function Observer (obj){
+            const keys = Object.keys(obj)
+            keys.forEach((k)=>{
+                Object.defineProperty(this,k,{
+                    get(){
+                        return obj[k]
+                    },
+                    set(val){
+                        console.log('我开始数据代理了')
+                        obj[k]= val
+                    }
+                })//this 是 Observer
+
+            })
+        }
+    </script>
+</body>
+
+</html>
