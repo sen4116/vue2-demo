@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <!-- 
+        vue对于数组没有对象包裹的数据，是没有进行数据监听，
+        所以导致你按照索引值修改就会产生页面数据没有实时更新，
+        但是vue对于数组中有对象包裹的数据，是有数据监听的。
+
+        vue对于数组数据更新检测有7个方法和 Vue.set()
+        push()  向数组尾部添加数据
+        pop() 删除数组尾部数据
+        shift()  删除数组第一个数据
+        unshift() 向数组头部添加数据
+        splice() 截取数组部分数据/或者向指点数组指定位置添加数剧
+        sort() 数组排序
+        reverse() 数组位置颠倒
+
+        vue提供的七个数组操作方法和原生Array操作方法不一样，vue 达到原生效果一致，同时也提供了数据渲染，数据监听
+     -->
+    <div id='root'>
+        <button @click="setPush">push 数组尾部添加数据</button>
+        <button @click="setPop">pop 删除数组尾部数据</button>
+        <button @click="setShift">shift 删除数组第一个数据</button>
+        <button @click="setUnshift">unshift 向数组头部添加数据</button>
+        <button @click="setSplice">splice 截取数组部分数据或者指定位置添加</button>
+        <button @click="setSort">sort 数据排序</button>
+        <button @click="setReverse">reverse 数组位置颠倒</button>
+        <button @click="set">Vue.set</button>
+        <h2>兴趣爱好</h2>
+        <ol>
+            <li v-for="(h,index) in hobby" :key="index">
+                {{h}}
+            </li>
+        </ol>
+        <h2>球类运动</h2>
+        <ul>
+            <li v-for="(b,index) in sports">
+                {{b.balls}}
+            </li>
+        </ul>
+        <div>
+            <span v-for = "(n,index) in num" :key="index">
+                {{n}}
+            </span>
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                hobby: ['抽烟', '喝酒', '烫头'],
+                num:[1,2,6,8,9,3,57,8,6,0],
+                sports: [
+                    {
+                        balls: '篮球'
+                    },
+                    {
+                        balls: '乒乓球',
+                    },
+                    {
+                        balls: '羽毛球',
+                    }
+                ]
+            },
+            methods: {
+                setPush() {
+                    let k = this.hobby.push('洗脚')
+                    console.log(k);//返回的数组长度
+                },
+                setPop() {
+                    let k = this.hobby.pop()
+                    console.log(k);//返回的是尾部被删除的数组数据
+                },
+                setShift(){
+                    let k = this.hobby.shift()
+                    console.log(k);//返回的是头部被删除的数组数据
+                },
+                setUnshift(){
+                    let k = this.hobby.unshift('按摩')
+                    console.log(k);//返回数组长度
+                },
+                setSplice(){
+                    let k = this.hobby.splice(0,2)
+                    console.log(k);//返回的是被截取的数据
+                },
+                setSort(){
+                    // let k = this.num.sort(); //如果没有设置是否是正序还是倒叙，那么就会默认以第一个字符串作为排序目标，进行正序排序
+                    let k = this.num.sort((a,b) => {
+                        //a为数组第二个值，b为数组第一个值
+                        return a-b
+                    })
+                    console.log(k);//返回被排序好的数组
+                },
+                setReverse(){
+                    let k = this.num.reverse();
+                    console.log(k)//返回被颠倒的数组
+                },
+                set(){
+                    Vue.set(this.hobby,3,'spa')
+                    vm.$set(this.sports,3,{
+                        balls: '排球'
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

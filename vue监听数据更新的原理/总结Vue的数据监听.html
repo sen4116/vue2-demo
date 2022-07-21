@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <button @click="person.age++">年龄加一岁</button><br>
+        <button @click="addSex">添加性别属性，默认值：男</button><br>
+        <button @click="person.sex = '女'">修改性别</button><br>
+        <button @click="addFriends">在列表首位添加一个朋友</button><br>
+        <button @click="setFriends">修改第一个朋友的名字为：凯里欧文</button><br>
+        <button @click="addHobby">向最后添加一个爱好</button><br>
+        <button @click="setHobby">修改最后个爱好为：开车</button><br>
+        <button @click="ageSort">朋友们按年龄排序</button>
+        <button @click="arrFilter">过滤睡觉</button>
+        <h3>姓名：{{person.name}}</h3>
+        <h3 v-if="person.sex">姓别：{{person.sex}}</h3>
+        <h3>年龄：{{person.age}}</h3>
+        <h3>爱好：</h3>
+        <ul>
+            <li v-for="(h,index) in person.hobby" :key="index">
+                {{h}}
+            </li>
+        </ul>
+        <h3>朋友们：</h3>
+        <ol>
+            <li v-for="(f,index) in person.friends" :key="index">
+                {{f.name +'----'+f.age}}
+            </li>
+        </ol>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                person: {
+                    name: '吉米·巴特勒',
+                    age: 18,
+                    hobby: ['健身', '打球', '喝咖啡'],
+                    friends: [
+                        {
+                            name: '勒布朗·詹姆斯',
+                            age: 35,
+                        },
+                        {
+                            name: '阿伦·艾佛森',
+                            age: 18,
+                        },
+                        {
+                            name: '德里克·罗斯',
+                            age: 28,
+                        }
+                    ]
+                }
+            },
+            methods: {
+                addSex() {
+                    // Vue.set(this.person,'sex','男')
+                    this.$set(this.person, 'sex', '男')
+                },
+                addFriends() {
+                    this.person.friends.unshift({
+                        name: '凯里·杜兰特',
+                        age: 35
+                    })
+                },
+                setFriends() {
+                    this.person.friends[0].name = '凯里·欧文'
+                },
+                addHobby() {
+                    this.person.hobby.push('睡觉')
+                },
+                setHobby() {
+                    //方法1：
+                    this.person.hobby.splice(3, 1, '开车') //可行
+
+                    //方法2
+                    // this.person.hobby.pop();
+                    // this.person.hobby.push('开车') //可行
+
+                    // 方法3
+                    // this.$set(this.person.hobby,3,'开车') //可行
+                },
+                ageSort() {
+                    this.person.friends.sort((a, b) => {
+                        return a.age - b.age
+                    })
+
+                },
+                arrFilter(){
+                    this.person.hobby = this.person.hobby.filter((e)=>{
+                        return e != '睡觉' 
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
