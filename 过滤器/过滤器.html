@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+    <script src="../js/dayjs.min.js"></script>
+</head>
+
+<body>
+    <!-- 
+        过滤器：
+            定义：对要显示的数据进行特定格式化后在显示（适用于一些简单逻辑）
+            语法：
+                1.注册过滤器Vue.filter(name,callback) 或者 new Vue(filters:{})，
+                2.使用过滤器：{{xxx | 过滤器名称}} 或是 v-bind：属性 = "xxxx | 过滤器名称" ,
+            备注：
+                1.过滤器可以接受额外参数，多个过滤器也可以串联
+                2.并没有改变原本数据，是产生新的对应的数据
+            
+     -->
+    <div id='root'>
+        <h2>文件创建时间--->computed方法  {{creationTime}}</h2>
+        <h2>现在时间--->methods方法 {{getNowTime()}}</h2>
+        <h2>创建时间跟现在时间时差多少--->filter方法 {{time |setNowTime}}</h2>
+        <h2>现在是：{{time | timeGetNow}}</h2>
+    </div>
+    <div id="root2">
+        <h2>现在是：{{time|timeGetNow |mySplice}}</h2>
+        <h2>全局filter 并且串联</h2>
+    </div>
+    <script>
+        Vue.filter('timeGetNow',(value,str= 'YYYY-MM-DD HH:mm:ss')=>{
+            return dayjs().format(str)
+        })
+        new Vue({
+            el:'#root2',
+            data:{
+                time: 1658414531813,
+            },
+            filters:{
+                mySplice(value){
+                    let str = value.toString()
+                    return str.slice(0,4)
+                }
+            }
+        })
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                time: 1658414531813,
+            },
+            computed:{
+                creationTime(){
+                    return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss')
+                }
+            },
+            methods: {
+                getNowTime(){
+                    return dayjs().format('YYYY-MM-DD HH:mm:ss')
+                }
+            },
+            // 局部过滤器
+            filters: { 
+                //filter 默认传入形参是 time（也就是过滤方法前面那个值）
+                setNowTime(value){
+                    let nowTime = Date.now();
+                    nowTime = (nowTime-value)/1000/60;
+                    nowTime = nowTime.toFixed()
+                    return nowTime+'分钟'
+                },
+                // timeGetNow(value,str= 'YYYY-MM-DD HH:mm:ss'){ // 若str形参没有传值，就会默认赋值 'YYYY-MM-DD HH:mm:ss'
+                //     return dayjs().format(str)
+                // }
+            }
+        })
+
+    </script>
+</body>
+
+</html>
