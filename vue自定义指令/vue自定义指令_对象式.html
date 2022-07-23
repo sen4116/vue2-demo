@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <!-- 
+        需求：定义一个v-fBind指令，和v-bind的功能类似，但是可以让其所绑定的input元素默认获取焦点
+     -->
+    <div id='root'>
+        年龄<input type="number" v-fbind="age">
+        <button @click="age++">age+1</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒',
+                age: 1,
+            },
+            directives:{
+                fbind:{
+                    // 指令与元素成功绑定时（初始化）
+                    bind(element,binding){
+                        element.value = binding.value * 2
+                    },
+                    // 指令所在元素被插入页面时
+                    inserted(element,binding){
+                        element.focus()
+                    },
+                    // 指令所在的模板被重新解析时
+                    update(element,binding){
+                        element.value = binding.value * 2
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
