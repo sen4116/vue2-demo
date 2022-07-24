@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>计数器：{{n}}</h2>
+        <button @click="n++">n+1</button>
+    </div>
+    <script>
+        const vm=new Vue({
+            // el: '#root',
+            // template:`
+            //     <div>
+            //         <h2>计数器：{{n}} 你好！李银河</h2>
+            //         <button @click="n++">n+1</button>
+            //     </div>
+            // `,
+            data: {
+                n: 1
+            },
+            methods: { //方法
+
+            },
+            beforeCreate() {
+                /**
+                 * 第一阶段执行：生命周期函数 beforeCreate
+                 * 现在，vue实例初始化：生命周期、事件，但是数据代理还未开始
+                 * 
+                 * this：指向vue实例对象，但是没有办法获取到data数据和methods方法,不能操作DOM元素。
+                 * */
+                console.log('beforeCreate')
+                // console.log(this)
+                // debugger;
+            },
+            created() {
+                /**
+                 * 第二阶段执行：生命周期函数 created
+                 * 现在：可以通过vm访问到data中的数据、methods中配置的方法
+                 * 
+                 * this：指向vue实例对象，vue未创建虚拟DOM，只是做好初始化数据监测、数据代理
+                 * */
+                console.log('created')
+                // console.log(this)
+                // debugger;
+            },
+            /**
+             * 第三阶段执行：vue解析模板，生成虚拟DOM(存储在内存中)，页面还不能显示解析好的内容。
+             * 
+             * 在解析模板中，执行的判断：
+             * 判断1：vue实例配置项中是否有el。(el：真实DOM元素，才能被Vue所接管)
+             * 有：执行下一步。
+             * 没有：继续查看你是否使用 Vue.$mount() 方法去配置真实DOM元素，没有就跳出，有执行下一步。
+             * 
+             * 判断2：是否使用template模板  (template模板中只允许存在一个根元素，value值可以使用es6中的模板字符串)
+             * 有：解析配置好的template模板，作为虚拟DOM模板，将template模版整个替换配置好的真实DOM。
+             * 没有：将真实DOM元素，复制作为虚拟DOM模板，进行解析操作。
+             * 区别：有template模板会将真实DOM元素替换，真实DOM不存在，没有template模板，会将真实DOM元素复制后，在复制DOM上操作
+             * */
+            beforeMount() {
+                /**
+                 * 第四阶段执行：生命周期函数 beforeMount
+                 * 
+                 * 此时：1.页面呈现的是未经Vue编译的DOM结构
+                 *      2.在此函数中所有对DOM的操作，最终不奏效
+                 * 
+                 * this：指向vue实例对象，走到此阶段：证明真实DOM存在，虚拟DOM以产生
+                 * */
+                console.log('beforeMount')
+                // console.log(this)
+                // debugger;
+            },
+            mounted() {
+                /**
+                 * 第四阶段执行：生命周期函数 mounted
+                 * 
+                 * 此时：1.页面中呈现的是经过Vue编译的DOM
+                 *      2.对DOM的操作均有效（尽可能避免操作DOM，因为Vue操作完DOM），至此初始化过程结束。
+                 *      一般在此经行：开始定时器、发送网络请求、订阅消息、绑定自定义事件、等初始化事件
+                 * 
+                 * this：指向vue实例对象,走到此阶段：证明真实DOM已被Vue编译好的虚拟DOM所替代
+                 * */
+                console.log('mounted')
+                // console.log(this)
+                // debugger;
+            },
+        })
+        // vm.$mount('#root')
+    </script>
+</body>
+
+</html>
