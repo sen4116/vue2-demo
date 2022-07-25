@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>计数器：{{n}}</h2>
+        <button @click="add">n+1</button>
+        <button @click="bye">销毁实例</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#root',
+            data: {
+                n: 1
+            },
+            methods: {//方法
+                add(){
+                    this.n++
+                },
+                bye(){
+                    console.log('bye')
+                    this.$destroy()
+                }
+            },
+             watch:{
+                n(newVal,oldVal){
+                    console.log(newVal+'---'+oldVal)
+                }
+            },
+            beforeCreate() {
+                console.log('beforeCreate vue实例对象初始化')
+            },
+            created() {
+                console.log('created vue初始化数据监测、数据代理')
+            },
+            beforeMount() {
+                console.log('beforeMount vue的虚拟DOM已经产生未挂载,做数据操作，均无效')
+            },
+            mounted() {
+                console.log('mounted vue的虚拟DOM已经挂载完毕,可以做数据操作,有效')
+            },
+            beforeUpdate() {
+                console.log('beforeUpdate 被Vue监听数据更新,页面未更新');
+                // console.log(this);
+                // debugger
+            },
+            updated() {
+                console.log('updated 页面和被vue监听数据都是最新的')
+                // console.log(this)
+                // debugger
+            },
+            /**
+             * 生命周期——销毁流程：
+             * 需要配合vue实例方法 vm.$destroy()
+             * 
+             * beforeDestroy: 销毁实例之前，在此生命周期函数中，做的任何数据操作都不会进行更新，
+             * vm中所有的：data、methods、指令等等，都是处于可用状态，但是都不会进行数据更新操作，
+             * 一般此阶段操作：关闭定时器、取消订阅消息、解绑自定义事件等收尾工作
+             * 
+             * destroyed：完成实例销毁
+             * */
+            beforeDestroy() {
+                console.log('beforeDestroy')
+                this.add()
+                // console.log(this)
+                // debugger
+            },
+            destroyed() {
+                console.log()
+            },
+        })
+    </script>
+</body>
+
+</html>

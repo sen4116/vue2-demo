@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <!-- 
+        需求1：让页面一打开文本内容的字体透明度从有到无，再从无到有，周而复始。
+        需求2：设置按钮让透明度停止变换
+
+        生命周期：
+            1.又名：生命周期回调函数、生命周期函数、生命周期钩子
+            2.是什么：Vue在关键时刻帮我们调用一个特殊名称的函数
+            3.生命周期函数名称不可以被更改，但函数的具体内容是程序员根据需求编写的
+            4.生命周期函数中的this指向的vue实例对象，或者是组件实例对象
+
+        常用的生命周期函数：
+          1.mounted：发送ajax请求、启动定时器、绑定自定义事件、订阅消息等【初始化操作】，
+          2.beforeDestroy：清楚定时器、解绑组件自定义事件、取消订阅消息【收尾工作】。
+
+        关于销毁Vue实例：
+          1.销毁后借助Vue开发者工具看不到任何信息。
+          2.销毁后自定义事件会失效，但是原生DOM事件依旧有效。
+          3.一般不会在beforeDestroy中操作数据，因为即便操作数据，也不会再触发更新流程
+     -->
+    <div id='root'>
+        <h2 :style="{opacity}">{{name}}</h2>
+        <button @click="stop">停止透明度变换</button>
+    </div>
+    <script>
+        new Vue({
+          el: '#root',
+          data: {
+            name: '你好，李银河！',
+            opacity:1
+          },
+          methods: {
+            //如果没有按钮去操作vue实例销毁咋办？所以清除定时器不能在这里写，
+            stop(){
+              this.$destroy()
+            }
+          },
+          //Vue完成模板的解析并把初始的真实DOM元素放在页面后（也成为挂载后），调用mounted
+          mounted() {
+            this.timer =  setInterval(() => {
+                this.opacity -= 0.01 
+                if(this.opacity <= 0) this.opacity = 1
+            }, 16);
+          },
+          beforeDestroy() {
+            clearInterval(this.timer)
+          },
+        })
+    </script>
+</body>
+
+</html>
+<!-- 
+  1.生命周期挂载流程：
+
+    第一阶段执行：生命周期函数 beforeCreate
+    现在，vue实例初始化：生命周期、事件，但是数据代理还未开始
+    this：指向vue实例对象，但是没有办法获取到data数据和methods方法,不能操作DOM元素。
+
+    第二阶段执行：生命周期函数 created
+    现在：可以通过vm访问到data中的数据、methods中配置的方法
+    this：指向vue实例对象，vue未创建虚拟DOM，只是做好初始化数据监测、数据代理
+
+    beforeCreate & create 在什么之前？ 是在vue初始化数据监测、数据代理之前
+
+    第三阶段执行：vue解析模板，生成虚拟DOM(存储在内存中)，页面还不能显示解析好的内容。
+    在解析模板中，执行的判断：
+    判断1：vue实例配置项中是否有el。(el：真实DOM元素，才能被Vue所接管)
+    有：执行下一步。
+    没有：继续查看你是否使用 Vue.$mount() 方法去配置真实DOM元素，没有就跳出，有执行下一步。
+    
+    判断2：是否使用template模板  (template模板中只允许存在一个根元素，value值可以使用es6中的模板字符串)
+    有：解析配置好的template模板，作为虚拟DOM模板，将template模版整个替换配置好的真实DOM。
+    没有：将真实DOM元素，复制作为虚拟DOM模板，进行解析操作。
+    区别：有template模板会将真实DOM元素替换，真实DOM不存在，没有template模板，会将真实DOM元素复制后，在复制DOM上操作
+    
+    第四阶段执行：生命周期函数 beforeMount
+    
+    此时：1.页面呈现的是未经Vue编译的DOM结构
+         2.在此函数中所有对DOM的操作，最终不奏效
+    
+    this：指向vue实例对象，走到此阶段：证明真实DOM存在，虚拟DOM以产生
+
+    第五阶段执行：生命周期函数 mounted
+    
+    此时：1.页面中呈现的是经过Vue编译的DOM
+         2.对DOM的操作均有效（尽可能避免操作DOM，因为Vue操作完DOM），至此初始化过程结束。
+         一般在此经行：开始定时器、发送网络请求、订阅消息、绑定自定义事件、等初始化事件
+    
+    this：指向vue实例对象,走到此阶段：证明真实DOM已被Vue编译好的虚拟DOM所替代
+
+  2.生命周期——更新流程：只有当虚拟DOM中监听的数据更新了，才会触发更新流程
+      
+    beforeUPdate：此时this指向的vue实例中被操作并监听的数据为新的，但是页面是旧的
+    即：页面尚未和数据同步更新
+     
+    beforeUpdate与updated之间，Vue做了操作，根据新数据，生成新的虚拟DOM，随后与旧的虚拟DOM进行比较，
+    最终完成页面更新，即：Model——>View的更新 模型层向视图层方向进过更新，中间有Vue监听和解析处理
+     
+    updated：此时页面数据都是最新的，即：页面和数据保持同步。
+
+  3.生命周期——销毁流程：
+
+    需要配合vue实例方法 vm.$destroy()
+    
+    beforeDestroy: 销毁实例之前，在此生命周期函数中，做的任何数据操作都不会进行更新，
+    vm中所有的：data、methods、指令等等，都是处于可用状态，都不会进行数据更新操作，
+    一般此阶段操作：关闭定时器、取消订阅消息、解绑自定义事件等收尾工作
+   
+    destroyed：完成实例销毁
+     
+ -->

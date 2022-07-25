@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>计数器：{{n}}</h2>
+        <button @click="n++">n+1</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#root',
+            data: {
+                n: 1
+            },
+            methods: {//方法
+
+            },
+            beforeCreate() {
+                console.log('beforeCreate vue创建数据、事件之前')
+            },
+            created() {
+                console.log('created vue初始化数据监测、数据代理')
+            },
+            beforeMount(){
+                console.log('beforeMount vue的虚拟DOM已经产生未挂载,做数据操作，均无效')
+            },
+            mounted(){
+                console.log('mounted vue的虚拟DOM已经挂载完毕,可以做数据操作,有效')
+            },
+            /**
+             * 生命周期——更新流程：只有当虚拟DOM中监听的数据更新了，才会触发更新流程
+             * 
+             * beforeUPdate：此时this指向的vue实例中被操作并监听的数据为新的，但是页面是旧的
+             * 即：页面尚未和数据同步更新
+             * 
+             * beforeUpdate与updated之间，Vue做了操作，根据新数据，生成新的虚拟DOM，随后与旧的虚拟DOM进行比较，
+             * 最终完成页面更新，即：Model——>View的更新 模型层向视图层方向进过更新，中间有Vue监听和解析处理
+             * 
+             * updated：此时页面数据都是最新的，即：页面和数据保持同步。
+             * 
+             * */
+            beforeUpdate(){
+                console.log('beforeUpdate');
+                // console.log(this);
+                // debugger
+            },
+            updated(){
+                console.log('updated')
+                // console.log(this)
+                // debugger
+            } 
+        })
+    </script>
+</body>
+
+</html>
