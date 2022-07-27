@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../../../js/vue.js'></script>
+</head>
+
+<body>
+    <!-- 
+        关于VueComponent:
+            1.school组件本质是一个名为VueComponent的构造函数，不是自己定义的，是Vue.extend()在被你调用创建组件时生成
+
+            2.我们只需要<school/>或者<school></school>,Vue解释时会帮我们创建school组件的实例对象，
+            即：Vue帮我执行了new VueComponent(option) 构造函数
+
+            3.🎇🎇🎇特别注意：每次调用Vue.extend,返回的都是一个全新的VueComponent !!!
+            因为Vue的源码，VueComponent是构造函数被作为返回，这样的好处是同一个组件每次被重复调用之间的数据没有互通性，确保每个组件数据独立性
+            一处修改数据，另一处数据不会被修改。
+
+            4.this的指向
+                1.组件配置中
+                    data函数，methods函数、watch中的函数、computed函数、它们的this指向均是【VueComponent实例对象】
+                2.new Vue()中
+                    data函数，methods函数、watch中的函数、computed函数、它们的this指向均是【Vue实例对象】
+
+            5.VueComponent的实例对象，以后简称 vc 
+              Vue的实例对象，以后简称vm
+            
+            6.在vm实例中查看组件实例对象，是在$children
+     -->
+    <div id='root'>
+        <school></school>    
+    </div>
+    <script>
+        const school = Vue.extend({
+            data() {
+                return {
+                    name: '你好！李银河',
+                }
+            },
+            template: `
+            <div>
+                <h2>{{name}}</h2>
+            </div>    
+        `
+        })
+        console.log(school)
+        const vm = new Vue({
+            el: '#root',
+            data: {
+            },
+            components: {
+                school
+            }
+        })
+    </script>
+</body>
+
+</html>

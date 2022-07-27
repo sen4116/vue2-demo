@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../../../js/vue.js'></script>
+</head>
+
+<body>
+    <!-- 
+        1.组件名称：
+            一个单词组成：
+                第一种写法（首字母小写）：school
+                第二种写法（首字母大写）：School
+            多个单词组成：
+                第一种写法（kebab-case）：'my-school' （需要用单引用号包裹）
+                第二种写法(CamelCase)：MySchool （需要在Vue脚手架环境中书写）
+        备注：
+            (1)组件名尽可能回避HTML中已有的元素名称。例如：h2 H2都不行
+            (2)可以使用组件name配置项指定组件在浏览器开发者工具中展示的名称
+        
+        2.组件标签
+            第一种写法：<school></school>
+            第二种写法：<school />
+            备注：第二种写法，不在Vue脚手架环境中，会导致标签后面的组件不能渲染
+            
+        3.一个简写的方式
+            const school = Vue.extend({option}) === const school = {option}
+     -->
+    <div id='root'>
+        <school></school>
+    </div>
+    <script>
+        const school = Vue.extend({
+            name:'School',
+            data() {
+                return {
+                    name: '你好啊！李银河'
+                }
+            },
+            template: `
+            <div>
+                <h2>{{name}}</h2>
+            </div>
+        `
+        })
+
+        new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒',
+            },
+            components: {
+                school
+            }
+        })
+    </script>
+</body>
+
+</html>

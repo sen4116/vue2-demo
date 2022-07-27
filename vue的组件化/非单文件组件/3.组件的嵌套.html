@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../../../js/vue.js'></script>
+</head>
+
+<body>
+    <div id='root'>
+
+    </div>
+    <script>
+
+        const student = Vue.extend({
+            data() {
+                return {
+                    persons: [
+                        {
+                            name: 'sen',
+                            specialty: '计算机'
+                        },
+                        {
+                            name: 'k',
+                            specialty: '设计'
+                        }
+                    ]
+                }
+            },
+            template:`
+                <div>
+                    <div v-for="(p,index) in persons" :key="index">
+                        <h2>
+                            姓名：{{p.name}}    
+                        </h2>
+                        <h2>
+                            专业：{{p.specialty}}
+                        </h2>
+                    </div>    
+                </div>
+            `
+        })
+        
+        const topNav = Vue.extend({
+            data(){
+                return {
+                    topNav:'你好啊！李银河'
+                }
+            },
+            template: `
+                <div>
+                    <h2>{{topNav}}</h2>    
+                </div>
+            `
+        })
+
+        const school = Vue.extend({
+            template:`
+                <div>
+                    <topNav></topNav>
+                    <hr>
+                    <h2>学校：{{name}}</h2>
+                    <h2>地址：{{address}}</h2>
+                    <student></student>    
+                </div>
+            `,
+            data() {
+                return {
+                    name: '武汉工程大学',
+                    address: '湖北武汉'
+                }
+            },
+            components:{
+                student,
+                topNav
+            }
+        })
+
+        const wish = Vue.extend({
+            data(){
+                return {
+                    wishes: '安安稳稳，慢慢地努力'
+                }
+            },
+            template:`
+                <div>
+                    <h2>{{wishes}}</h2>    
+                </div> 
+            `
+        })
+
+        const app = Vue.extend({
+            template:`
+                <div>
+                    <school></school>
+                    <hr>
+                    <wish></wish>
+                </div>
+            `,
+            components:{
+                school,
+                wish
+            }
+        })
+
+        new Vue({
+            el: '#root',
+            template:`
+                <div>
+                    <app></app>
+                </div>
+            `,
+            data: {
+                name: '吉米·巴特勒'
+            },
+            components:{
+                app,
+            }
+        })
+    </script>
+</body>
+
+</html>
