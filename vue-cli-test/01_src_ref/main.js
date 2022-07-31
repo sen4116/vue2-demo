@@ -8,10 +8,6 @@ import App from './App.vue'
 // 关闭Vue的生产提示
 Vue.config.productionTip = false
 
-// 全局注入混合
-import {mixinOne} from './mixin'
-Vue.mixin(mixinOne)
-
 //创建Vue的实例对象---vm 
 new Vue({
   render: h => h(App),
