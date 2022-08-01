@@ -84,3 +84,23 @@
     备注：✨✨✨
     若被接收的组件中data属性名和mixin.js混合的data属性名一致，组件数据覆盖，混合数据 ===>接收组件优先级高
     mixin.js的生命周期和接收混合的组件执行顺序优先级===>混合的优先级更高
+
+## 7.插件
+    功能：用于增强Vue
+    本质：包含install方法的一个对象，install的第一个参数是Vue构造函数，第二个以后的参数是插件使用者传递的数据
+    定义插件：
+        对象.install = function(){
+            // 1. 添加全局过滤器
+            Vue.filter()
+
+            // 2.添加全局指令
+            Vue.directive()
+
+            // 3.配置全局混入
+            Vue.mixin()
+
+            // 4.添加实例方法
+            Vue.prototype.$myMethod = function(){}
+            Vue.prototype.$myProperty = xxx
+        }
+    使用插件：Vue.use()

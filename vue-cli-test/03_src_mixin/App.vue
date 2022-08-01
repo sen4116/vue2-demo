@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fiction></fiction>
+    <Fiction></Fiction>
     <hr />
     <Student></Student>
   </div>
