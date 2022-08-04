@@ -8,7 +8,12 @@ import App from './App.vue'
 // 关闭Vue的生产提示
 Vue.config.productionTip = false
 
-
+//应用插件
+/*
+    Vue.use()//调用插件api
+*/
+import plugins from './plugins'
+Vue.use(plugins)
 
 //创建Vue的实例对象---vm 
 new Vue({

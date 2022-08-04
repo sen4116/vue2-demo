@@ -104,3 +104,7 @@
             Vue.prototype.$myProperty = xxx
         }
     使用插件：Vue.use()
+
+## 8.组件样式书写 scoped
+    作用：让样式在局部生效，防止文件之间的样式名冲突
+    写法：<style scoped>

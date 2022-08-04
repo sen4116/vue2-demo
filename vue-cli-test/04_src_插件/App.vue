@@ -2,7 +2,6 @@
   <div>
     <Fiction></Fiction>
     <hr />
-    <div class="bgc">你好！李银河</div>
   </div>
 </template>
 
@@ -16,8 +15,4 @@ export default {
 </script>
 
 <style>
-.bgc {
-  background-color: blue;
-  color: pink;
-}
 </style>

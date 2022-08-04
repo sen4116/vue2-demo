@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>小说：{{name}}</h2>
-    <h2>作者：{{author | myFilter}}</h2>
+    <h2 class="bgc">小说：{{name}}</h2>
+    <h2 class="yellow">作者：{{author}}</h2>
     <input type="text" v-FBind="x">
   </div>
 </template>
@@ -19,6 +19,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+//有scoped在，形成了局部作用域，服务子组件，外部不干预 
+.bgc{
+  background-color: rgb(185, 28, 28);
+}
+.yellow{
+  background-color: yellow;
+}
+</style>>
 
-</style>
