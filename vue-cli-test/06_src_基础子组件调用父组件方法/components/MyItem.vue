@@ -7,7 +7,7 @@
           <span>{{ data.title }}</span>
         </label>
       </li>
-      <button class="delete" @click="handleDetest(data.id)">删除</button>
+      <button class="delete">删除</button>
     </div>
   </div>
 </template>
@@ -23,18 +23,10 @@ export default {
   props: {
     todo: Object,
     checkTodo:Function,
-    detestTodo:Function,
   },
   methods: {
-    //勾选or取消 checkbox事件
     handleCheck(id){
       this.checkTodo(id)
-    },
-    // 删除一个todo 
-    handleDetest(id){
-      // 确认为true，取消为false  confirm：浏览器对话框
-      if(!confirm('是否删除本事件?')) return 
-      this.detestTodo(id)
     }
   },
 };
@@ -52,19 +44,8 @@ export default {
   border: 1px solid #ddd;
   box-sizing: border-box;
   position: relative;
-  button{
-    display: none;
-  }
 }
 li {
   list-style: none;
 }
-
-.listItem:hover{
-  background-color: #ddd;
-  button{
-    display: block;
-  }
-}
-
 </style>

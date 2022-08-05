@@ -6,7 +6,6 @@
        :key="todoObj.id" 
        :todo="todoObj"
        :checkTodo="checkTodo"
-       :detestTodo="detestTodo"
        ></MyItem> 
     </ul>
   </div>
@@ -24,7 +23,7 @@
         components:{
             MyItem
         },
-        props:['todoData',"checkTodo","detestTodo"]
+        props:['todoData',"checkTodo"]
     }
 </script>
 

@@ -2,17 +2,12 @@
   <div>
     <div class="root">
       <MyHeader :addTodo="addTodo"></MyHeader>
-      <MyList
-        :todoData="todoData"
-        :checkTodo="checkTodo"
-        :detestTodo="detestTodo"
-      >
+      <MyList 
+      :todoData="todoData"
+      :checkTodo="checkTodo"
+       >
       </MyList>
-      <MyFooter
-        :todoData="todoData"
-        :checkAllTodo="checkAllTodo"
-        :clearAllTodo="clearAllTodo"
-      ></MyFooter>
+      <MyFooter></MyFooter>
     </div>
   </div>
 </template>
@@ -38,7 +33,7 @@ export default {
         {
           id: "002",
           title: "睡觉",
-          done: false,
+          done: true,
         },
         {
           id: "003",
@@ -50,36 +45,16 @@ export default {
   },
   methods: {
     // 添加一个todo
-    addTodo(todoObj) {
-      this.todoData.unshift(todoObj);
+    addTodo(todoObj){
+      this.todoData.unshift(todoObj)
     },
     // 勾选or取消勾选一个todo
-    checkTodo(id) {
-      this.todoData.forEach((todo) => {
-        if (todo.id === id) todo.done = !todo.done;
+    checkTodo(id){
+      console.log('我接收的一个改变')
+      this.todoData.forEach(todo => {
+        if(todo.id === id) todo.done = !todo.done
       });
-    },
-    // 删除一条任务
-    detestTodo(id) {
-      // console.log("我接收的一个删除"+id);
-      // filter 不会改变原数组
-      this.todoData = this.todoData.filter((item) => {
-        return item.id != id;
-      });
-    },
-    //全选 or 全不选
-    checkAllTodo(done) {
-      this.todoData.forEach((item) => {
-        item.done = done;
-      });
-    },
-    // 清除所有已经完成的todo
-    clearAllTodo() {
-      if(!confirm('是否清除已完成任务！')) return
-      this.todoData = this.todoData.filter((item) => {
-        return !item.done;
-      });
-    },
+    }
   },
 };
 </script>
