@@ -60,6 +60,9 @@
     props是只读的，Vue底层会监测你对props的修改，如果进行了修改，就会发出警告，
     若业务需求确定修改，那么请复制props的数据到data中一份，然后去修改子组件data的数据
 
+    props 接收数据被Vue浅监听，只监听接收数据存储的外层数据变化，没有监听数据底层的变化。
+    如：接收是一个对象obj，而此时修改obj.a,这种情况Vue是监听不了的，但是修改obj = "xxx",这样操作会被Vue所监听
+
     也可以接受父组件传入的函数方法
     父组件：
     <Demo :propsName="methodsName"> methods:{methodsName(e){}}

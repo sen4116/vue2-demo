@@ -4,7 +4,6 @@
       <MyHeader :addTodo="addTodo"></MyHeader>
       <MyList 
       :todoData="todoData"
-      :checkTodo="checkTodo"
        >
       </MyList>
       <MyFooter></MyFooter>
@@ -48,13 +47,6 @@ export default {
     addTodo(todoObj){
       this.todoData.unshift(todoObj)
     },
-    // 勾选or取消勾选一个todo
-    checkTodo(id){
-      console.log('我接收的一个改变')
-      this.todoData.forEach(todo => {
-        if(todo.id === id) todo.done = !todo.done
-      });
-    }
   },
 };
 </script>
