@@ -4,13 +4,35 @@
       type="text"
       placeholder="请输入你的任务名称，按回车健确认"
       class="inputText"
+      v-model="title"
+      @keydown.enter="add"
     />
   </div>
 </template>
 
 <script>
+import {nanoid} from 'nanoid'
 export default {
   name: "MyHeader",
+  data() {
+    return {
+      title:''
+    }
+  },
+  methods: {
+    add(){
+      if(!this.title.trim()) return alert('您输入的有误！')
+      const todoObj = {
+        id: nanoid(),
+        // title: e.target.value,
+        title: this.title, 
+        done: false 
+      }
+      this.addTodo(todoObj)
+      this.title = ''
+    },
+  },
+  props:['addTodo']
 };
 </script>
 

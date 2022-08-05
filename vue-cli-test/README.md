@@ -60,6 +60,11 @@
     props是只读的，Vue底层会监测你对props的修改，如果进行了修改，就会发出警告，
     若业务需求确定修改，那么请复制props的数据到data中一份，然后去修改子组件data的数据
 
+    也可以接受父组件传入的函数方法
+    父组件：
+    <Demo :propsName="methodsName"> methods:{methodsName(e){}}
+    子组件：
+    <childDemo >  props:['propsName'] 此时父组件事件在vc实例上
 ## 6.mixin(混入)
     功能：可以把多个组件公用的配置提取成一个混合对象
     使用方法：
