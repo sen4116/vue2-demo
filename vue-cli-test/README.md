@@ -37,7 +37,7 @@
         打标识：<h1 ref="xxx"></h1> 或 <school ref="xxx"></school>
         获取：this.$refs.xxx
 ## 5.配置项props
-    
+
     功能：让组件接收外部传过来的数据
     1.传入数据：
         <Demo name="xxx">
@@ -59,10 +59,10 @@
     备注：✨✨✨
     props是只读的，Vue底层会监测你对props的修改，如果进行了修改，就会发出警告，
     若业务需求确定修改，那么请复制props的数据到data中一份，然后去修改子组件data的数据
-
+    
     props 接收数据被Vue浅监听，只监听接收数据存储的外层数据变化，没有监听数据底层的变化。
     如：接收是一个对象obj，而此时修改obj.a,这种情况Vue是监听不了的，但是修改obj = "xxx",这样操作会被Vue所监听
-
+    
     也可以接受父组件传入的函数方法
     父组件：
     <Demo :propsName="methodsName"> methods:{methodsName(e){}}
@@ -75,14 +75,14 @@
         export default {
             data(){
                 return{
-
+    
                 }
             },
             methods:{
-
+    
             },
             mounted(){
-
+    
             }
         }
         第二步：使用混入
@@ -100,13 +100,13 @@
         对象.install = function(){
             // 1. 添加全局过滤器
             Vue.filter()
-
+    
             // 2.添加全局指令
             Vue.directive()
-
+    
             // 3.配置全局混入
             Vue.mixin()
-
+    
             // 4.添加实例方法
             Vue.prototype.$myMethod = function(){}
             Vue.prototype.$myProperty = xxx
@@ -116,3 +116,45 @@
 ## 8.组件样式书写 scoped
     作用：让样式在局部生效，防止文件之间的样式名冲突
     写法：<style scoped>
+
+## 9.组件的自定义事件
+
+1.一种组件间通信的方式，适用于：<font color=red>子组件 ===> 父组件</font>
+
+2.使用场景：A是父组件，B是子组件，B想给A传数据，那么就要在A中给B绑定自定义事件(<font color=red>事件回调在A中</font>)
+
+3.绑定自定义事件：
+
+​	1.第一种方式：在父组件中：`<Demo @事件名="回调函数" />`	或者	`<Demo v-on:事件名="callback">` 
+
+​	2.第二种方式：在父组件中
+
+```
+<Demo ref="demo" />
+......
+methods(){
+	this.$refs.demo.$on('事件名',callback)
+	//若想让自定义事件只能触发一次，可以使用 $once 或者是 在标签里使用修饰符 .once
+	//this.$refs.demo.$once('eventName',callback)
+}
+```
+
+4.触发自定义事件： `this.$emit('eventName',callback)` <font color=blue>（在子组件中使用）</font>
+
+5.解绑自定义事件：`this.$off()`  	若 `this.$off()` 中没有传eventName,那么则会清除子组件标签中所有绑定的自定义事件
+
+```
+this.$off() //清除所有
+this.$off('eventName') //清除指定自定义事件
+this.$off(['eventName'....]) //清除多个自定义事件
+```
+
+6.组件上也可以绑定原生DOM事件，需要在子组件标签中使用`.native`修饰符
+
+```
+<Demo @click.native="callback" />
+```
+
+🎇🎇🎇
+
+7.注意：通过`this.$refs.xxx.$on('eventName',callback)`绑定自定义事件时，回调函数<font color=red>要么配置在methods中，要么就是回调函数就使用箭头函数，</font>否则this指向会出现问题
