@@ -19,23 +19,34 @@
     (13)public文件夹: 公用文件夹
     (14)node_modules文件夹: 插件包
 
+
+
 ## 2.关于不同版本的Vue
+
     (1)vue.js与vue.runtime.xxx.js的区别
         (a).vue.js 是完整的Vue。包含了核心功能(生命周期、指令) + 模版解析器
         (b).vue.runtime.xxx.js是运行版的Vue，只包含：核心功能：没有模板解析器
     (2)vue.runtime.xxx.js如何渲染模板
         因为没有模板解析器，所以就不能使用template配置项，需要使用render函数接收到createElement函数去指定具体内容
 
+
+
 ## 3.vue.config.js配置文件
+
    >  使用命令：vue inspect > output.js 只能查看Vue脚手架的默认配置项
    >  使用vue.config.js可以对脚手架进行个性化定制，详情见 https://cli.vuejs.org/zh/
 
+
+
 ## 4.ref属性
+
     1.被用来给元素或子组件注册引用信息(id的替身)
     2.应用在html标签上获取的是真实DOM元素，应用在组件标签上是组件实例对象(vc)
     3.使用方式： xxx是自定义绑定的名称
         打标识：<h1 ref="xxx"></h1> 或 <school ref="xxx"></school>
         获取：this.$refs.xxx
+
+
 ## 5.配置项props
 
     功能：让组件接收外部传过来的数据
@@ -68,7 +79,10 @@
     <Demo :propsName="methodsName"> methods:{methodsName(e){}}
     子组件：
     <childDemo >  props:['propsName'] 此时父组件事件在vc实例上
+
+
 ## 6.mixin(混入)
+
     功能：可以把多个组件公用的配置提取成一个混合对象
     使用方法：
         第一步：定义混合 创建js文件，暴露数据
@@ -93,7 +107,10 @@
     若被接收的组件中data属性名和mixin.js混合的data属性名一致，组件数据覆盖，混合数据 ===>接收组件优先级高
     mixin.js的生命周期和接收混合的组件执行顺序优先级===>混合的优先级更高
 
+
+
 ## 7.插件
+
     功能：用于增强Vue
     本质：包含install方法的一个对象，install的第一个参数是Vue构造函数，第二个以后的参数是插件使用者传递的数据
     定义插件：
@@ -113,9 +130,14 @@
         }
     使用插件：Vue.use()
 
+
+
 ## 8.组件样式书写 scoped
+
     作用：让样式在局部生效，防止文件之间的样式名冲突
     写法：<style scoped>
+
+
 
 ## 9.组件的自定义事件
 
@@ -157,4 +179,41 @@ this.$off(['eventName'....]) //清除多个自定义事件
 
 🎇🎇🎇
 
-7.注意：通过`this.$refs.xxx.$on('eventName',callback)`绑定自定义事件时，回调函数<font color=red>要么配置在methods中，要么就是回调函数就使用箭头函数，</font>否则this指向会出现问题
+7.注意：通过`this.$refs.xxx.$on('eventName',callback)`绑定自定义事件时，回调函数<font color=red>要么配置在methods中，要么就是回调函数就使用箭头函数，</font>否则this**`指向会出现问题`**
+
+
+
+## 10.全局事件总线
+
+1.一种组件间通信的方式，适用于<font color="red">任意组件间通信</font>
+
+2.安装全局事件总线：
+
+```
+new Vue({
+	...
+	beforeCreate(){
+		Vue.peototype.$bus = this //安装全局事件总线，$bus就是当前应用的vm 
+	}
+	...
+})
+```
+
+3.使用事件总线
+
+​	1.接收数据：A组件想要接收数据，则在A组件中给$bus 绑定自定义事件，事件的<font color="red">回调留在A组件自身</font>
+
+```
+methods(){
+	demo(data){
+		...
+	}
+}
+mounted: {
+	this.$bus.$on('eventName', demo)
+}
+```
+
+​	2.提供数据（触发自定义事件）：`this.$bus.$emit('eventName',携带数据)`
+
+4.最好在beforeDestroy钩子中，用$off去解绑<font color="red">当前组件所用到的事件</font>

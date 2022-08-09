@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../../js/vue.js'></script>
+</head>
+
+<body>
+    <!-- 
+        1.一个重要的内置关系：VueComponent.prototype.__proto__ === Vue.prototype
+        2.为啥要有这个关系： 让组件实例对象（vc）可以访问Vue原型上的属性和方法
+     -->
+    <div id='root'>
+        <h2>{{name}}</h2>
+        <patient></patient>
+    </div>
+    <script>
+        const patient = Vue.extend({
+            name: 'Patient',//配置在Vue 浏览器工具上的组件名称
+            data() {
+                return {
+                    patients: [
+                        {
+                            name: 'Joker',
+                            nickName: '小丑'
+                        },
+                        {
+                            name: 'Scarecrow',
+                            nickName: '稻草人'
+                        },
+                    ]
+                }
+            },
+            template: `
+                <div>
+                    <div v-for="(p,index) in patients" :key="index">
+                        <h2>外号：{{p.nickName}}</h2>
+                        <h2>姓名：{{p.name}}</h2>
+                    </div>    
+                </div>
+            `
+        })
+        // 验证VueComponent的显示原型属性和Vue的显示原型属性是否一样
+        console.log(patient.prototype.__proto__ === Vue.prototype)
+        
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '吉米·巴特勒'
+            },
+            components:{
+                patient,
+            }
+        })
+        console.log(vm)
+ 
+        // js 原型关系
+
+        //创建构造函数
+        // function Demo() {
+        //     this.a = 0
+        //     this.b = 1
+        // }
+        // // 创建Demo的实例对象
+        // const d = new Demo()
+        // console.log(Demo.prototype) //显示原型属性
+        // console.log(d.__proto__) //隐式原型属性
+        // // 显示原型属性 === 隐式原型属性 === 原型对象
+
+        // // 程序员通过显示原型属性操作原型对象添加数据
+        // Demo.prototype.x = 99
+        // // 程序员可以通过隐式原型属性可以查询
+        // console.log(d.__proto__.x)
+        // console.log(d.x)
+        // console.log(d)
+    </script>
+</body>
+
+</html>
