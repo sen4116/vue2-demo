@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import pubsub from 'pubsub-js'
 export default {
     name:'Fiction',
     data() {
@@ -17,12 +18,8 @@ export default {
     },
     props:['getFictionName'],
     methods: {
-      // 发送事件  第一种方法
-      // sendPersonName(){
-      //   this.x.$emit('hello',999)
-      // }
       sendPersonName(){
-        this.$bus.$emit('hello',999) //方法二
+        pubsub.publish('hello',999) //发送消息
       }
     },
 

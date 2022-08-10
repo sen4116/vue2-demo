@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import pubsub from 'pubsub-js'
 export default {
   data() {
     return {
@@ -15,14 +16,15 @@ export default {
     };
   },
   mounted() {
-    // 绑定事件 第一种方法
-    // this.x.$on('hello',this.hello)
-    this.$bus.$on('hello',this.hello) // 方法二
+    this.pid = pubsub.subscribe('hello',this.hello) // 订阅绑定消息
   },
   methods: {
-    hello(x){
-      console.log('我接收到了兄弟组件发给我的数据x：' + x)
+    hello(messageName,data){
+      console.log('我接收到了兄弟组件发给我的eventName：' + messageName+'，数据data：'+data)
     }
+  },
+  beforeDestroy() {
+    pubsub.unsubscribe(this.pid) //解绑订阅消息
   },
 };
 </script>

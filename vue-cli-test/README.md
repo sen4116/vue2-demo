@@ -217,3 +217,36 @@ mounted: {
 ​	2.提供数据（触发自定义事件）：`this.$bus.$emit('eventName',携带数据)`
 
 4.最好在beforeDestroy钩子中，用$off去解绑<font color="red">当前组件所用到的事件</font>
+
+
+
+## 11.消息订阅与发布（pubsub）
+
+1.一种组件间通信的方式，适用于<font color="red">任意组件间通信</font>
+
+2.使用步骤：
+
+​	1.安装pubsub：`npm i pubsub-js`
+
+​	2.引入	`import pubsub from 'pubsub-js'`
+
+​	3.接收数据：A组件想接收数据，则在A组件中订阅消息，订阅的<font color="red">回调留在A组件自身</font>
+
+​	
+
+```
+methods：{
+	demo(data){}
+}
+...
+mounted(){
+	this.pid = pubsub.subscribe('eventName',this.demo)//订阅消息
+},
+beforeDestroy(){
+	pubsub.unsubsrcibe(this.pid) //取消订阅
+}
+```
+
+4.提供数据：`pubsub.publish('eventName',数据)`
+
+5.最好在beforeDestroy钩子中，用`pubsub.unsubsrcibe(this.pid)` 去<font color="red">取消订阅</font>

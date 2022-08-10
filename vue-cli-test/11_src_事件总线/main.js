@@ -24,7 +24,7 @@ new Vue({
    //将aap组件放入容器中，调用了vm.$mount(),挂载容器
   render: h => h(App), 
   beforeCreate() {
-    Vue.prototype.$bus = this
+    Vue.prototype.$bus = this //第二种写法 ===> 第二种方法最常用
   },
 }).$mount('#app')
 //$mount 挂载容器
