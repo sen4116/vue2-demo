@@ -250,3 +250,13 @@ beforeDestroy(){
 4.提供数据：`pubsub.publish('eventName',数据)`
 
 5.最好在beforeDestroy钩子中，用`pubsub.unsubsrcibe(this.pid)` 去<font color="red">取消订阅</font>
+
+
+
+## 12.nextTick
+
+1.语法：`this.$nextTick(callback)`
+
+2.作用：在下一次DOM更新结束后执行其指定的回调
+
+3.使用场景：当改变数据后，要基于更新后的新DOM经行某一些操作，要在nextTick所指定的回调函数中执行  ===> 可以理解为：执行方法中，<font color="red">有操作更新DOM数据和操作原生DOM事件的同时，</font>Vue会先将方法执行完，不会立即去更新DOM，从而导致操作原生DOM事件没有生效，所以此时就应该使用nextTick全局api
