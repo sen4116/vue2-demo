@@ -260,3 +260,51 @@ beforeDestroy(){
 2.作用：在下一次DOM更新结束后执行其指定的回调
 
 3.使用场景：当改变数据后，要基于更新后的新DOM经行某一些操作，要在nextTick所指定的回调函数中执行  ===> 可以理解为：执行方法中，<font color="red">有操作更新DOM数据和操作原生DOM事件的同时，</font>Vue会先将方法执行完，不会立即去更新DOM，从而导致操作原生DOM事件没有生效，所以此时就应该使用nextTick全局api
+
+
+
+## 13.Vue封装得过度与动画
+
+1.作用：在插入、更新或者移除DOM元素时，在合适的时候给元素添加样式类名。
+
+2.图示
+
+![image-20220811172536340](https://picgo-image-sen.oss-cn-zhangjiakou.aliyuncs.com/Typora/202208111725347.png)
+
+3.使用场景：
+
+Vue 提供了 `transition` 的封装组件，在下列情形中，可以给任何元素和组件添加进入/离开过渡
+
+- 条件渲染 (使用 `v-if`)
+- 条件展示 (使用 `v-show`)
+- 动态组件
+- 组件根节点
+
+4.写法
+
+1）准备好样式：
+
+- 元素进入的样式：
+  1. v-enter :进入的起点
+  2. v-enter-active :进入执行的过程
+  3. v-enter-to :进入的终点
+
+- 元素离开的样式：
+  1. v-leave :离开的起点
+  2. v-leave-active :离开执行的过程
+  3. v-leave-to :离开的终点
+
+
+
+2）使用`<transition>`包裹要过度的元素，并且配置name属性，确保唯一性
+
+```
+<transition-group name="firstBox" appear>
+        <div v-show="!isBox" class="boxTwo" key="1">我陈平安有一🗡</div>
+        <div v-show="isBox" class="box" key="2">你好呀！李银河(test3)</div>
+</transition-group>
+```
+
+
+
+3）备注：若是多个元素需要过度，则需要使用:`<transition-group>`,且每一个元素都要指定key值
