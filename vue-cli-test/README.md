@@ -308,3 +308,59 @@ Vue 提供了 `transition` 的封装组件，在下列情形中，可以给任�
 
 
 3）备注：若是多个元素需要过度，则需要使用:`<transition-group>`,且每一个元素都要指定key值
+
+
+
+## 14.Vue的请求代理 
+
+![image-20220814105942678](https://picgo-image-sen.oss-cn-zhangjiakou.aliyuncs.com/Typora/202208141059075.png)
+
+### Vue脚手架配置
+
+#### 方法1：
+
+在vue.config.js添加如下配置
+
+```
+devServer: {
+    proxy: 'http://localhost:4000'
+}
+```
+
+说明:
+
+1. 优点：配置简单，请求资源直接发给前端（8080）即可
+2. 缺点：不能配置多个代理，不能灵活的控制请求是否走代理
+3. 工作方式：若按照上述配置代理，当请求了前端不存在的资源时，那么该请求会转发给服务器（优先匹配前端资源）
+
+#### 方法2：
+
+在vue.config.js添加如下配置
+
+```
+devServer: {
+    proxy: {
+      // 通过代理前缀区别代理服务配置  /fiction
+      '/fiction': {
+      	//目标请求地址
+        target: 'http://localhost:8001',
+        ws: true,
+        changeOrigin: true,
+        // pathRewrite（对象/函数）重写目标的 url 路径，确保返回时路径。对象键将用作正则表达式以匹配路径。
+        pathRewrite:{'^/fiction':''}
+      },
+      '/car': {
+        target: 'http://localhost:8002',
+        pathRewrite:{'^/car':''}
+      }
+    }
+  }
+  
+  changeOrigin: 默认值为true，服务器收到的请求头中的host跟服务器ip地址一致，若为false，则会暴露请求服务的ip
+  
+```
+
+说明：
+
+1. 优点：可以配置多个代理，且可以灵活的控制请求时候走代理
+2. 缺点：配置略微繁琐，请求资源时必须加前缀

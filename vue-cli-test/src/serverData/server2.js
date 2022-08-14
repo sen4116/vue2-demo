@@ -4,7 +4,7 @@ const express = require('express')
 const app = express();
 // 创建路由规则
 app.get('/server', (request, response) => {
-    console.log('有人请求了服务器1')
+    console.log('有人请求了服务器2')
     let cars = {
         cars: [
             {
@@ -38,6 +38,6 @@ app.get('/server', (request, response) => {
     response.send(cars)
 })
 
-app.listen(8000,()=>{
+app.listen(8002,()=>{
     console.log('服务器启动成功')
 })
