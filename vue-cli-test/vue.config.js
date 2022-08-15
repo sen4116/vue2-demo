@@ -13,20 +13,20 @@ module.exports = defineConfig({
   // }
 
   // 多个代理服务配置
-  devServer: {
-    proxy: {
-      // 通过代理前缀区别代理服务配置  /fiction
-      '/fiction': {
-        target: 'http://localhost:8001',
-        ws: true,
-        changeOrigin: true,
-        // pathRewrite（对象/函数）重写目标的 url 路径，确保返回时路径。对象键将用作正则表达式以匹配路径。
-        pathRewrite:{'^/fiction':''}
-      },
-      '/car': {
-        target: 'http://localhost:8002',
-        pathRewrite:{'^/car':''}
-      }
-    }
-  }
+  // devServer: {
+  //   proxy: {
+  //     // 通过代理前缀区别代理服务配置  /fiction
+  //     '/fiction': {
+  //       target: 'http://localhost:8001',
+  //       ws: true,
+  //       changeOrigin: true,
+  //       // pathRewrite（对象/函数）重写目标的 url 路径，确保返回时路径。对象键将用作正则表达式以匹配路径。
+  //       pathRewrite:{'^/fiction':''}
+  //     },
+  //     '/car': {
+  //       target: 'http://localhost:8002',
+  //       pathRewrite:{'^/car':''}
+  //     }
+  //   }
+  // }
 })
