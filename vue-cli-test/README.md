@@ -364,3 +364,96 @@ devServer: {
 
 1. 优点：可以配置多个代理，且可以灵活的控制请求时候走代理
 2. 缺点：配置略微繁琐，请求资源时必须加前缀
+
+
+
+## 15.插槽
+
+1.作用：让父组件可以向子组件指定位置插入html结构，也是一种组件间通信的方式，适用于 <font color="red"> 父组件 ===> 子组件</font>
+
+2.分类：默认插槽、具名插槽、作用域插槽
+
+3.使用方式：
+
+> 1.默认插槽
+
+```
+父组件中：
+<Category title="美食">
+<!-- 
+向子组件的插槽传入内容
+-->
+	<div>
+		<ul v-for="(item, index) in foods" :key="index">
+			<li>{{ item }}</li>
+		</ul>
+	</div>
+</Category>
+
+子组件中：
+<div>
+	<slot>插槽默认内容</slot>
+</div>
+```
+
+> 2.具名插槽
+
+```
+父组件中：
+<Category title="美食">
+<!-- 
+向子组件的插槽传入内容
+-->
+	<template v-slot:插槽名>
+        <div>
+            <ul v-for="(item, index) in foods" :key="index">
+                <li>{{ item }}</li>
+            </ul>
+        </div>
+	</template>
+</Category>
+
+子组件中：
+<div>
+	<slot name="插槽名">插槽默认内容</slot>
+</div>
+```
+
+> 3.作用域插槽
+
+🎇🎇🎇
+
+理解：<font color="red">数据在子组件本身，但是根据数据生成的结构需要组件的使用者来决定。</font>(foods数据在子组件中，但是数据所遍历出来的结构有父组件决定)
+
+```
+父组件中
+<Category title="美食">
+	<template slot-scope="value">
+		<div>
+			<ul v-for="(item, index) in value.foods" :key="index">
+				<li>{{ item }}</li>
+			</ul>
+		</div>
+	</template>
+	<template v-slot:key1="{sex}">{{sex}}</template>
+</Category>
+
+子组件中
+<div>
+	<slot :foods="foods" :fictions="fictions" :nba="nba"></slot>
+    <slot name="key1" sex="男">我是默认插槽1</slot>
+</div>
+```
+
+<font color="red">在Vue 2.6版本中template模板 slot属性被遗弃</font> 
+
+建议采用   ✨✨✨ <font color="blue">条件在template标签中使用</font>
+
+v-slot:default="插槽名"   ===> 默认插槽写法
+
+v-slot:插槽名  或  #插槽名 ===>  具名插槽写法  
+
+v-slot:插槽名=“{data:slotData}”   ===>  作用域解构插槽写法（slotData: 子组件插槽传入的值）
+
+v-slot:[dynamicSlotName]  ===>  动态插槽名 （dynamicSlotName：需要在父组件中定义）
+
