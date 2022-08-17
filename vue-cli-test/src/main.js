@@ -7,14 +7,19 @@ import Vue from 'vue'
 import App from './App.vue'
 // 引用Vue-resource
 import vueRsourse from 'vue-resource'
+//引用store
+import store from './store/index.js'
 // 关闭Vue的生产提示
 Vue.config.productionTip = false
 
 // 在实例中 $http 就是请求插件   vue-resource
 Vue.use(vueRsourse)
+
+
 //创建Vue的实例对象---vm 
 new Vue({
   render: h => h(App),
+  store,
   beforeCreate() {
     Vue.prototype.$bus = this
   }
