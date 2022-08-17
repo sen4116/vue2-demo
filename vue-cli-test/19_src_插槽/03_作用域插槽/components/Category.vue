@@ -4,6 +4,9 @@
     <slot :foods="foods" :fictions="fictions" :nba="nba"></slot>
     <slot name="key1" sex="男">我是默认插槽1</slot>
     <slot name="key2">我是默认插槽2</slot>
+    <slot name="fictions" >
+      我陈平安有一剑
+    </slot>
   </div>
 </template>
 

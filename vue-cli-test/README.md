@@ -457,3 +457,8 @@ v-slot:插槽名=“{data:slotData}”   ===>  作用域解构插槽写法（slo
 
 v-slot:[dynamicSlotName]  ===>  动态插槽名 （dynamicSlotName：需要在父组件中定义）
 
+
+
+## 16.vuex
+
+1.概念：

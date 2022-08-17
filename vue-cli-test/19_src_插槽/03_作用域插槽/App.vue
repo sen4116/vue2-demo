@@ -24,12 +24,8 @@
       </template>
     </Category>
     <Category title="nba">
-      <template slot-scope="{fictions}">
-        <div>
-          <ul v-for="(item, index) in fictions" :key="index">
-            <li>{{ item }}</li>
-          </ul>
-        </div>
+      <!-- 动态插槽名 -->
+      <template v-slot:[slotName] >
       </template>
     </Category>
   </div>
@@ -38,6 +34,11 @@
 <script>
 import Category from "./components/Category.vue";
 export default {
+  data() {
+    return {
+      slotName:'fictions'
+    }
+  },
   components: {
     Category,
   },
