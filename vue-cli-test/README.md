@@ -524,11 +524,11 @@ const state = {}
 Vue.use(Vuex)
 
 // 创建store实例
-const store = new Vuex.Store(
-    actions,
+const store = new Vuex.Store({
+	actions,
     mutations,
     state
-)
+})
 
 //导出store
 export default store
