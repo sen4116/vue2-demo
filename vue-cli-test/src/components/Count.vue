@@ -27,7 +27,7 @@ export default {
     this.$store.commit('Jia',this.n)
     },
     decrement(){
-    //  this.$store.dispatch('jian',this.n)
+     this.$store.dispatch('jian',this.n)
     },
     incrementOdd(){
       this.$store.dispatch('jiaOdd',this.n)

@@ -550,3 +550,48 @@ new Vue({
 }).$mount('#app')
 ```
 
+
+
+### 5.vuex的基本使用
+
+1.初始化数据，配置actions、mutations、state，操作store.js文件
+
+```
+//引用vue
+import Vue from 'vue'
+//引用vuex
+import Vuex from 'vuex'
+
+//准备 actions 对象——响应组件中的用户的动作
+const actions = {
+	// context: 上下文对象，也可以在此方法调用actions中其他方法，用context.dispatch()
+	jian(context,value){
+        context.commit('Jian',value)
+    }
+}
+//准备 mutations对象——修改state中的数据
+const mutations = {
+	Jian(state,value){
+        state.sum -= value
+    }
+}
+//准备 state 对象——保存共享数据
+const state = {
+	sum: 0,
+}
+
+// 创建store实例
+const store = new Vuex.Store({
+	actions,
+    mutations,
+    state
+})
+```
+
+2.组件中读取Vuex的数据: `$store.state.sum`
+
+3.组件中修改Vuex的数据：`$store.dispatch('actions的方法名',数据)` 或 `$store.commit('mutations中的方法名',数据)`
+
+🧨🧨🧨
+
+备注：若没有网络请求或其他业务逻辑，组件中也可以越过actions，即不写`dispatch'`,直接编写`commit`
