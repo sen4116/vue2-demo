@@ -648,3 +648,68 @@ methods:{
 }
 ```
 
+
+
+### 7.Vuex模块化 + 命名空间
+
+1.目的：让代码更好维护，让多种数据分类更加明确
+
+2.修改`store.js`
+
+```
+const countAbout = {
+ nameSpaced:true, //开启命名空间
+ mutations:{...},
+ state:{...},
+ getters:{...},
+ actions:{...}
+}
+
+//在vuex中模块化引用 modules中的key值是模块名，value是模块的内容
+export default new Vuex.Store({
+	modules:{
+		count : countAbout
+	}
+})
+```
+
+3.开启命名空间，组件中读取state数据
+
+```
+//方式一：借助mapState读取
+...mapState('counts',['name','fiction','sum']),
+...mapState('persons',{personList:'personList'}),
+//方式二：自己直接读取
+this.$store.state.persons.personList
+```
+
+4.开启命名空间，组件中读取getters数据：
+
+```
+//方式一：借助mapGetters读取
+...mapGetters('counts',["bigSum"]),
+...mapGetters('counts',{bigSum:"bigSum"}),
+//方式二：自己直接读取
+this.$store.getters['persons/firstPersonName'].name
+```
+
+5.开启命名空间，组件中调用dispatch跟actions联系
+
+```
+//方式一：借助mapActions
+...mapActions('counts',{incrementOdd:'jiaOdd',incrementWait:'jiaWait'})
+...mapActions('counts',['jiaOdd','jiaWait'])
+//方式二：自己调用  dispatch(传入路径) 路径以模块名开头，在模块中找到actions里联系的方法
+this.$store.dispatch('persons/addPersonServer')
+```
+
+6.开启命名空间，组件中调用commit跟mutations联系
+
+```
+//方式一：借助mapMutations
+...mapMutations('counts',{increment:'Jia',decrement:'Jian'}),
+...mapMutations('counts',['Jia','Jian'])
+//方式二：自己调用 
+this.$store.commit('persons/ADD_PERSON',personObj)
+```
+
