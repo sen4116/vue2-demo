@@ -58,7 +58,7 @@ const state = {
 
 // getter类似于vue的component
 const getters= {
-    bigSum(){
+    bigSum(state){
         return state.sum*10
     }
 }

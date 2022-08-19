@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h2>当前的和是 {{ sum }}</h2>
-    <h2>当前的十倍和是 {{ bigSum }}</h2>
-    <h2 style="color:red;">persons组件的人员数:{{personList.length}}</h2>
+    <h2>当前的和是 {{ $store.state.sum }}</h2>
+    <h2>当前的十倍和是 {{ $store.getters.bigSum }}</h2>
     <h2>{{ name }}</h2>
     <h2>{{ fiction }}</h2>
     <h2>{{ bigSum }}</h2>
@@ -28,28 +27,54 @@ export default {
     };
   },
   computed: {
+    // 程序员自己写的
+    /*
+    sum(){
+      return this.$store.state.sum
+    },
+    bigSum(){
+      return this.$store.getters.bigSum
+    }
+    */ 
+    
+
     // 用于帮助我们映射state 中的数据为计算属性（数组写法）
-    ...mapState('counts',['name','fiction','sum']),
-    ...mapState('persons',['personList']),
+    ...mapState(['name','fiction',]),
     // 用于帮助我们映射state 中的数据为计算属性（对象写法）
     // ...mapState({ name: "name", fiction: "fiction" ,}),
     // 用于帮助我们映射getters 中的数据为计算属性（对象写法）
     // ...mapGetters({ bigSum: "bigSum" }),
     // 用于帮助我们映射getters 中的数据为计算属性（数组写法）
-    ...mapGetters('counts',["bigSum"]),
+    ...mapGetters(["bigSum"]),
   },
   methods: {
+
+    // 程序员自己亲自调用
+    // increment() {
+    //   //  this.$store.dispatch('jia',this.n)
+    //   this.$store.commit("Jia", this.n);
+    // },
+    // decrement() {
+    //   this.$store.commit("Jian", this.n);
+    // },
+
     //对象写法 key：调用方法名，value：mutations中对应的方法名， 🎆🎆🎆 不过此处是传不了参数的，mutations中对应方法接收的是event参数，所以想传值可以在调用的时候传
-    ...mapMutations('counts',{increment:'Jia',decrement:'Jian'}),
+    ...mapMutations({increment:'Jia',decrement:'Jian'}),
     //数组写法，那么调用的方法名要与mutations对应的方法名一致
     // ...mapMutations(['Jia','Jian']),
+
+
+    // incrementOdd() {
+    //   this.$store.dispatch("jiaOdd", this.n);
+    // },
+    // incrementWait() {
+    //   this.$store.dispatch("jiaWait", this.n);
+    // },
+
     //对象写法 key：调用方法名，value：mutations中对应的方法名，
-    ...mapActions('counts',{incrementOdd:'jiaOdd',incrementWait:'jiaWait'})
+    ...mapActions({incrementOdd:'jiaOdd',incrementWait:'jiaWait'})
      //数组写法，那么调用的方法名要与mutations对应的方法名一致
-    // ...mapActions('counts',["jiaOdd","jiaWait"])
-  },
-  mounted() {
-    console.log(this)
+    // ...mapActions(["jiaOdd","jiaWait"])
   },
 };
 </script>
