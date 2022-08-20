@@ -713,3 +713,36 @@ this.$store.dispatch('persons/addPersonServer')
 this.$store.commit('persons/ADD_PERSON',personObj)
 ```
 
+## 17.vue- router路由
+
+### 1.vue-router的理解
+
+​	vue的一个插件库，专门来实现SPA应用
+
+### 2.对于SPA应用的理解
+
+1. 单页Web应用（single page web application ，SPA）。
+2. 整个应用只有一个完整的页面
+3. 点击页面的导航链接<font color="red">不会刷新</font>页面，只会做页面的<font color=red>局部更新</font>。
+4. 数据需要通过ajax请求获取
+
+### 3.路由的理解
+
+#### 1.什么是路由？
+
+1. 一个路由就是一组映射关系（key-value）
+2. key 为路径，value可能function 或 component
+
+#### 2.路由分类
+
+1. 后端路由：
+
+   1）理解：value是function，用于处理客户端提交的提交。
+
+   2）工作过程：服务器接收到一个请求，根剧**请求路径**找到匹配的函数来处理请求，返回响应数据。
+
+2. 前端路由：
+
+   1）理解：value是component，用于展示页面内容。
+
+   2）工作过程：当浏览器的路径改变时，对应的组件就会显示
