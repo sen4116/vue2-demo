@@ -810,4 +810,40 @@ export default router
 
 2.每个路由组件中的`vc(vueComponent)`实例上都是存在`$route`和`$router`,每个组件中`$router`是不一样的，存放的都是自己的信息，但是<font color=red>每个组件中$router是vue中唯一的router（</font>路由器）
 
-3.当切换路由组件时，会将隐藏的路由组件进行销毁，显示的路由组件会被重新渲染
+3.当切换路由组件时，会将隐藏的路由组件进行销毁，显示的路由组件会被重新渲染！
+
+
+
+### 5.多级路由（嵌套路由）
+
+1.配置路由规则，使用children配置项
+
+```js
+routes :[
+        {
+            path: '/about',
+            component: About
+        },
+        {
+            path: '/home',
+            component: Home,
+            children:[
+                {
+                    path:'news',
+                    component:News
+                },
+                {
+                    path:'message',
+                    component:Message
+                }
+            ]
+        }
+    ]
+```
+
+2.跳转（要写完整路径）
+
+```html
+<router-link  active-class="active" to="/home/news">News</router-link>
+```
+
