@@ -745,4 +745,61 @@ this.$store.commit('persons/ADD_PERSON',personObj)
 
    1）理解：value是component，用于展示页面内容。
 
-   2）工作过程：当浏览器的路径改变时，对应的组件就会显示
+   2）工作过程：当浏览器的路径改变时，**对应的组件就会显示**
+   
+   
+
+### 4.基本使用
+
+1. 安装vue-router，命令npm i vue-router@版本号 vueRouter 3版本对应 vue2 ，vueRouter 4版本对应 vue3
+2. 引用插件： `import VueRouter from 'vue-router'`
+3. 应用插件：`Vue.use(VueRouter)`
+4. 编辑`router.js`文件
+
+```javascript
+// 引用VueRouter
+import VueRouter from 'vue-router';
+// 引用路由展示组件
+import About from '../components/About'
+import Home from '../components/Home'
+//创建router实例对象，去管理一组一组的路由规则
+const router = new VueRouter({
+    routes :[
+        {
+            path: '/about',
+            component: About
+        },
+        {
+            path: '/Home',
+            component: Home
+        }
+    ]
+})
+
+// 导出router
+export default router
+```
+
+5. 实现切换(active-class可以配置高亮样式)
+
+   ```
+   <router-link active-class="active" to="/about">About</router-link>
+   ```
+
+   <router-link>标签最后被vue解析成<a>标签,所以需要修改样式的话，最后应该是指向<a>标签
+
+   ```css
+   .nav > a {
+     color: #fff;
+     //去掉下划线
+     text-decoration: none;
+   }
+   ```
+
+6. 指定展示位置
+
+   ```
+   <router-view></router-view>
+   ```
+
+   

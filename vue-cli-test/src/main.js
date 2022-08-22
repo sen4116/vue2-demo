@@ -5,16 +5,15 @@
 import Vue from 'vue'
 // 引用App组件，它是所有组件的父组件
 import App from './App.vue'
-// 引用Vue-resource
-import vueRsourse from 'vue-resource'
-//引用store
-import store from './store/index.js'
+
+//引用VueRouter
+import VueRouter from 'vue-router'
+import router from './router/router'
 // 关闭Vue的生产提示
 Vue.config.productionTip = false
 
-// 在实例中 $http 就是请求插件   vue-resource
-Vue.use(vueRsourse)
-
+// 应用VueRouter插件
+Vue.use(VueRouter)
 
 //创建Vue的实例对象---vm 
 new Vue({
@@ -22,6 +21,6 @@ new Vue({
   beforeCreate() {
     Vue.prototype.$bus = this
   },
-  store,
+  router:router
 }).$mount('#app')
 //$mount 挂载容器
