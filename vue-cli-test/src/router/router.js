@@ -1,8 +1,8 @@
 // 引用VueRouter
 import VueRouter from 'vue-router';
 // 引用路由展示组件
-import About from '../components/About'
-import Home from '../components/Home'
+import About from '../pages/About'
+import Home from '../pages/Home'
 
 const router = new VueRouter({
     routes :[

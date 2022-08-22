@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-6 topBox">
-        <h2>welcome to use VueRouter</h2>
+        <Head></Head>
       </div>
     </div>
     <div class="row">
@@ -22,8 +22,9 @@
 </template>
 
 <script>
+import Head from './components/Head'
 export default {
-  components: {},
+  components: {Head},
 };
 </script>
 

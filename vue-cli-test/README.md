@@ -802,4 +802,12 @@ export default router
    <router-view></router-view>
    ```
 
-   
+✨✨✨
+
+备注：
+
+1.路由组件和页面组件分开存放，页面组件存放在`component`文件夹中，路由组件存放在`pages`文件夹中
+
+2.每个路由组件中的`vc(vueComponent)`实例上都是存在`$route`和`$router`,每个组件中`$router`是不一样的，存放的都是自己的信息，但是<font color=red>每个组件中$router是vue中唯一的router（</font>路由器）
+
+3.当切换路由组件时，会将隐藏的路由组件进行销毁，显示的路由组件会被重新渲染
