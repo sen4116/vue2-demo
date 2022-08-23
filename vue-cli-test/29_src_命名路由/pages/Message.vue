@@ -2,18 +2,21 @@
   <div>
     <ul>
       <li v-for="m in aData" :key="m.id">
-        <!-- 跳转并携带params参数，to的字符串写法（固定传值） -->
-        <!-- <router-link to="/home/message/details/666/你好">{{m.msg}}</router-link> -->
-        <!-- 跳转并携带params参数，to的对象写法 -->
+        <!-- 简化前，需要写完整的路径 -->
+        <!-- <router-link  :to="`/home/message/details?id=${m.id}&title=${m.msg}`">{{m.msg}}</router-link> -->
+        <!-- 简化后，直接通过名字跳转 -->
+        <!-- <router-link :to="{name:'key1'}"></router-link> -->
+        <!-- 简化后，直接通过名字跳转 -->
         <router-link
           :to="{
             name: 'key1',
-            params: {
+            query: {
               id: m.id,
-              title: m.msg,
+              title: m.msg
             },
-          }">{{ m.msg }}
-        </router-link>
+          }"
+          >{{ m.msg }}</router-link
+        >
       </li>
     </ul>
     <div>

@@ -28,7 +28,7 @@ const router = new VueRouter({
                     children:[
                         {
                             name:'key1',
-                            path:'details/:id/:title',//使用占位符声明接收params参数
+                            path:'details',
                             component:Details
                         }
                     ]

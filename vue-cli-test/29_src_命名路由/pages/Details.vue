@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>消息id:{{$route.params.id}}</h2>
-    <h2>消息title:{{$route.params.title}}</h2>
+    <h2>消息id:{{$route.query.id}}</h2>
+    <h2>消息title:{{$route.query.title}}</h2>
   </div>
 </template>
 

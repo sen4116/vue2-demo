@@ -2,6 +2,9 @@
   <div>
     <ul>
         <li v-for="m in aData" :key="m.id">
+          <!-- 跳转并携带query参数  to的字符串写法（固态传参）-->
+          <!-- <router-link  to="/home/message/details?id=666&title=你好">{{m.msg}}</router-link> -->
+
           <!-- 跳转并携带query参数  to的字符串写法-->
           <!-- <router-link  :to="`/home/message/details?id=${m.id}&title=${m.msg}`">{{m.msg}}</router-link> -->
           

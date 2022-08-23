@@ -874,3 +874,104 @@ routes :[
 $route.query.id
 $route.query.title
 ```
+
+
+
+### 7.命名路由
+
+1.作用：可以简化路由的跳转。
+
+2.如何使用
+
+​	1.给路由命名
+
+```js
+{
+    path: '/home',
+    component: Home,
+    children:[
+        {
+            path:'news',
+            component:News
+        },
+        {
+            path:'message',
+            component:Message,
+            children:[
+                {
+                    name:'key1', //给路由命名
+                    path:'details',
+                    component:Details
+                }
+            ]
+        }
+    ]
+}
+```
+
+​	2.简化跳转
+
+```vue
+<!-- 简化前，需要写完整的路径 -->
+<router-link  :to="`/home/message/details?id=${m.id}&title=${m.msg}`">{{m.msg}}</router-link>
+<!-- 简化后，直接通过名字跳转 -->
+<router-link :to="{name:'key1'}"></router-link>
+<!-- 简化写法配合传递参数 -->
+<router-link
+    :to="{
+        name: 'key1',
+        query: {
+        id: m.id,
+        title: m.msg,
+    },
+}">{{ m.msg }}
+</router-link>
+```
+
+
+
+### 8.路由的params参数
+
+1.配置路由，声明接收params参数
+
+```js
+{
+    path: '/home',
+    component: Home,
+    children:[
+        {
+            path:'news',
+            component:News
+        },
+        {
+            path:'message',
+            component:Message,
+            children:[
+                {
+                    name:'key1',
+                    path:'details/:id/:title',//使用占位符声明接收params参数
+                    component:Details
+                }
+            ]
+        }
+    ]
+}
+```
+
+2.传递参数
+
+```vue
+ <!-- 跳转并携带params参数，to的字符串写法（固定传值） -->
+ <!-- <router-link to="/home/message/details/666/你好">{{m.msg}}</router-link> -->
+ <!-- 跳转并携带params参数，to的对象写法 -->
+ <router-link
+     :to="{
+     name: 'key1',
+     params: {
+     id: m.id,
+     title: m.msg,
+     },
+ }">{{ m.msg }}
+ </router-link>
+```
+
