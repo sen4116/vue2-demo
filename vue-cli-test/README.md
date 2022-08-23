@@ -975,3 +975,7 @@ $route.query.title
  </router-link>
 ```
 
+✨✨✨
+
+<font color=red>注意</font>:路由携带params参数时，若使用to的对象写法，则不能使用oath配置项，必须使用name配置属性
+
