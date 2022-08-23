@@ -847,3 +847,30 @@ routes :[
 <router-link  active-class="active" to="/home/news">News</router-link>
 ```
 
+### 6.路由的query参数
+
+1.在父路由组件传参的方法
+
+```vue
+<!-- 跳转并携带query参数  to的字符串写法（固态传参）-->
+<router-link  to="/home/message/details?id=666&title=你好">{{m.msg}}</router-link>
+
+<!-- 跳转并携带query参数  to的字符串写法（动态传参）-->
+<router-link  :to="`/home/message/details?id=${m.id}&title=${m.msg}`">{{m.msg}}</router-link>
+
+<!-- 跳转并携带query参数，to的对象写法 -->
+<router-link  :to="{
+    path :'/home/message/details',
+    query:{
+        id:m.id,
+        title:m.msg
+    }
+}">{{m.msg}}</router-link> 
+```
+
+2.在子路由组件接收的方法
+
+```js
+$route.query.id
+$route.query.title
+```
