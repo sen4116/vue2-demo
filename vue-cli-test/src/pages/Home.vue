@@ -6,10 +6,10 @@
     <div>
       <ul class="homeLi">
         <li>
-          <router-link  active-class="active" to="/home/news" >News</router-link>
+          <router-link :replace="true" active-class="active" to="/home/news" >News</router-link>
         </li>
         <li>
-          <router-link active-class="active" to="/home/message">Message</router-link>
+          <router-link replace active-class="active" to="/home/message">Message</router-link>
         </li>
       </ul>
     </div>
