@@ -979,3 +979,81 @@ $route.query.title
 
 <font color=red>注意</font>:路由携带params参数时，若使用to的对象写法，则不能使用oath配置项，必须使用name配置属性
 
+
+
+### 9.路由的props配置
+
+作用：让路由组件更方便的收到参数
+
+在组件中使用 `$route` 会使之与其对应路由形成高度耦合，从而使组件只能在某些特定的 URL 上使用，限制了其灵活性。
+
+使用 `props` 将组件和路由解耦
+
+![image-20220824231625544](https://picgo-image-sen.oss-cn-zhangjiakou.aliyuncs.com/Typora/202208242316771.png)
+
+在router.js文件中配置
+
+```js
+{
+    path:'message',
+    component:Message,
+    children:[
+        {
+        name:'key1',
+        // path:'details/:id/:title',//使用占位符声明接收params参数  第一个种写法需要带的
+        path:'details',//第二种写法和第三种写法需要带的
+        component:Details,
+        // 第一个种写法,对象写法.该对象中所有的key-value的组合最终都会通过props传给Details组件
+        props:{id:666,title:'你好'}
+
+        // 第二种写法,布尔值,当值为true时,把路由接收到的所有params参数通过props传给details组件
+        props:true,     
+        //布尔值只能搭配 params使用并且需要在path路径中需要写好占位符
+
+        // 第三种写法,函数式,该函数返回的对象中每一足key-value都会通过props传给details组件
+        // 函数式中的第一个参数就是 this.$route(唯一的路由)   
+        // 函数式只能搭配query传参使用  注意传值也得是query属性
+        props($route){
+                return {
+                    id: $route.query.id,
+                    title: $route.query.title
+                }
+            }
+        }
+    ]
+}
+```
+
+在组件中发送
+
+```
+//第二种布尔值传值
+<router-link
+:to="{
+name: 'key1',
+params: {
+    id: m.id,
+    title: m.msg,
+    },
+}"
+>{{ m.msg }}
+</router-link>
+//第三种函数式传值
+<router-link
+:to="{
+name: 'key1',
+query: {
+    id: m.id,
+    title: m.msg,
+    },
+}"
+>{{ m.msg }}
+</router-link>
+```
+
+在组件中接收
+
+```
+props:['id','title']
+```
+
