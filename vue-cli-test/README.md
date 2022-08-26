@@ -1155,3 +1155,89 @@ deactivated() {
 },
 ```
 
+
+
+### 14.路由守卫
+
+1.作用：对路由进行权限控制
+
+2.分类：全局路由守卫，独享路由守卫、组件内路由守卫
+
+3.全局路由守卫： beforeEach() //前置路由，afterEach() //后置路由
+
+```javascript
+//在路由配置项中meta可以用于程序员在路由组件中存取信息
+ routes :[
+        {
+            name:"guanyu",
+            path: '/about',
+            component: About,
+            meta:{isAuth:false,title:'关于'}//元信息，程序员可以在路由组件中存信息
+        },
+     ]
+
+
+// 全局前置路由守卫，初始化执行，在一切的操作之前去拦截
+router.beforeEach((to,from,next)=>{
+    // console.log("111",to); //到达的目的地位置
+    // console.log("222",from); //前一步的位置或是来自于哪里
+    if(to.meta.isAuth){
+        if(to.name == "xinwen" || to.name == "xiaoxi"){ //鉴权
+            if(localStorage.getItem('userName') === 'asen'){
+                next();
+            }else{
+                alert('你没有该权限')
+            }
+        }else{
+            next()
+        }
+    }else{
+        next()
+    }
+
+    // next();//next:类型是function ，被调用的时候是放行的操作
+
+})
+
+// 全局后置路由守卫，初始化执行，每次路由切换后执行,如果前置路由没放行，那么后置路由就自动执行不了
+router.afterEach((to,from)=>{
+    // console.log("111",to); //到达的目的地位置
+    // console.log("222",from); //前一步的位置或是来自于哪里
+    if(to.meta.title){
+        document.title = to.meta.title;
+    }else{
+        document.title = "vue-cil-test"
+    }
+})
+```
+
+4.独享路由守卫：针对某一个路由进行守卫，与全局路由守卫互不干涉，也可以两者搭配使用  beforeEnter
+
+```js
+ {
+     name: 'xinwen',
+     path: 'news',
+     component: News,
+     meta: { isAuth: true, title: '新闻' },
+     beforeEnter: (to, from, next) => { 
+         console.log('独享路由守卫激活')
+         console.log("111", to); //到达的目的地位置
+         // console.log("222",from); //前一步的位置或是来自于哪里
+         if (to.meta.isAuth) {
+             if (to.name == "xinwen" || to.name == "xiaoxi") { //鉴权
+                 if (localStorage.getItem('userName') === 'asen') {
+                     next();
+                 } else {
+                    alert('你没有该权限')
+                }
+             } else {
+                next()
+             }
+         } else {
+             next()
+         }
+ 	}
+ }
+```
+
+5
