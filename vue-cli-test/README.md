@@ -1011,7 +1011,7 @@ $route.query.title
         //布尔值只能搭配 params使用并且需要在path路径中需要写好占位符
 
         // 第三种写法,函数式,该函数返回的对象中每一足key-value都会通过props传给details组件
-        // 函数式中的第一个参数就是 this.$route(唯一的路由)   
+        // 函数式中的第一个参数就是 this.$route 该传值组件的 
         // 函数式只能搭配query传参使用  注意传值也得是query属性
         props($route){
                 return {
@@ -1059,7 +1059,7 @@ props:['id','title']
 
 
 
-### 10 `<router-link>`的replace属性
+### 10. `<router-link>`的replace属性
 
 1.作用：控制路由跳转时操作浏览器历史记录的模式
 
@@ -1071,5 +1071,87 @@ props:['id','title']
 //两种写法
 <router-link :replace="true" active-class="active" to="/home/news" >News</router-link>
 <router-link replace active-class="active" to="/home/message">Message</router-link>
+```
+
+
+
+### 11.编程式路由导航
+
+1.作用：不借助`<router-link>`实现路由跳转，让路由跳转更加灵活
+
+2.具体编码
+
+```js
+//push Api 实现跳转
+this.$router.push({
+    name: "key2",
+    query: {
+        id: data.id,
+        title: data.title,
+    },
+});
+
+//replace Api 实现替换
+this.$router.replace({
+    name: "key2",
+    query: {
+        id: data.id,
+        title: data.title,
+    },
+});
+
+//操作浏览器的历史记录
+this.$router.back() //后退
+this.$router.forward() //前进
+this.$router.go()//参数是number值，正数为前进几步，负数为退后几步
+
+同样展示功能还是得要依赖于<router-view>标签
+```
+
+
+
+### 12.缓存路由组件
+
+1.作用：让不展示得路由组件保持挂载，不被销毁。
+
+2.具体编码
+
+```vue
+<keep-alive include="News">
+  <router-view></router-view>
+</keep-alive>
+```
+
+include 属性：指定某个组件保持挂载，<font color=red>这里的值是组件名称，不是路由名称</font>
+
+
+
+### 13.路由组件的生命周期
+
+1.作用：路由组件所独有的两个生命周期，用于捕获路由组件的激活状态。
+
+2.具体名字：
+
+1. `activated`路由组件被激活时触发
+2. `deactivated`路由组件失活时触发
+
+```vue
+不过需要搭配<keep-alive>
+<keep-alive :include=['new','message']>
+	<router-view></router-view>
+</keep-alive>
+
+activated() {
+// 路由组件被激活时触发
+	this.timer = setInterval(()=>{
+        console.log('路由组件被激活时触发')
+        this.opacity -= 0.01;
+        if(this.opacity <= 0) this.opacity = 1
+	},100)
+},
+deactivated() {
+    // 路由失活的时候触发
+    clearInterval(this.timer)
+},
 ```
 

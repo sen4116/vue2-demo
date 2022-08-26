@@ -6,18 +6,14 @@
     <div>
       <ul class="homeLi">
         <li>
-            <router-link :replace="true" active-class="active" to="/home/news" >News</router-link>
+          <router-link :replace="true" active-class="active" to="/home/news" >News</router-link>
         </li>
         <li>
           <router-link replace active-class="active" to="/home/message">Message</router-link>
         </li>
       </ul>
     </div>
-    <keep-alive include="News">
-      <!-- include属性值是组件名称 -->
-      <router-view></router-view>
-    </keep-alive>
-    
+    <router-view></router-view>
   </div>
 </template>
 
