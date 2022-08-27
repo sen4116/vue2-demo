@@ -1240,4 +1240,46 @@ router.afterEach((to,from)=>{
  }
 ```
 
-5
+5.组件内路由守卫
+
+```js
+export default {
+    name:'About',
+    //通过路由规则，进入组件时被调用  
+    beforeRouteEnter(to,from,next){
+      console.log(111,to) //目的地路由组件信息
+      console.log(222,from) //来自于哪个组件信息
+      next()//放行
+    },
+    //通过组件路由规则，离开组件时被调用
+    beforeRouteLeave (to, from, next) {
+      console.log(121,to) //目的地路由组件信息
+      console.log(222,from)//来自于哪个组件信息
+      next()//离开时放行
+    }
+}
+```
+
+
+
+### 15.路由器的两种工作模式
+
+1. 对于一个url来说，什么是hash（哈希）值，——  在网页地址导航栏中#及后面的内容就是hash值
+2. hash值不会包含在HTTP请求中，即：hash值不会带给服务器请求
+3. hash模式：
+   1. url地址中永远带着#号，不美观。
+   2. 若以后将地址通过第三方手机app分享，若是app校验严格，则地址会被标记不合法。
+   3. hash模式兼容性好
+4. history模式（h5模式）：
+   1. 地址干净，美观。
+   2. 兼容性和hash模式相比略差
+   3. 应用部署上线时需要后端人员支持，解决刷新页面服务器404问题
+
+```
+import VueRouter from 'vou-router'
+const router = new VueRouter({
+	mode:'hash',//切换路由工作模式，默认是hash
+	mode:'history'//h5模式
+})
+```
+
