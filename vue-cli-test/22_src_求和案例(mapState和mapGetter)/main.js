@@ -18,6 +18,7 @@ Vue.use(vueRsourse)
 
 //创建Vue的实例对象---vm 
 new Vue({
+  // h 是脚手架使用vue版本中 渲染函数（h）而在render属性的值，则是接收到 h 渲染函数的返回值
   render: h => h(App),
   beforeCreate() {
     Vue.prototype.$bus = this

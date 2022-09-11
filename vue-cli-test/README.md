@@ -28,6 +28,17 @@
         (b).vue.runtime.xxx.js是运行版的Vue，只包含：核心功能：没有模板解析器
     (2)vue.runtime.xxx.js如何渲染模板
         因为没有模板解析器，所以就不能使用template配置项，需要使用render函数接收到createElement函数去指定具体内容
+        
+        //在main.js中
+        //创建Vue的实例对象---vm 
+        new Vue({
+          // h 是脚手架使用vue版本中 渲染函数（h）而在render属性的值，则是接收到 h 渲染函数的返回值
+          render: h => h(App),
+          beforeCreate() {
+            Vue.prototype.$bus = this
+          },
+          store,
+        }).$mount('#app')
 
 
 
