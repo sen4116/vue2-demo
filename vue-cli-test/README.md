@@ -1294,3 +1294,14 @@ const router = new VueRouter({
 })
 ```
 
+
+
+## 16.Vue UI组件库
+
+1. 移动端常用UI组件库
+   - Vant	 [介绍 - Vant Weapp (vant-ui.github.io)](https://vant-ui.github.io/vant-weapp/#/home)
+   - Cube UI   [cube-ui Document (didi.github.io)](https://didi.github.io/cube-ui/#/zh-CN)
+   - Mint UI  [Mint UI (mint-ui.github.io)](http://mint-ui.github.io/#!/zh-cn)
+2. PC 端常用UI组件库
+   - Element UI [Element - 网站快速成型工具](https://element.eleme.cn/#/zh-CN)****
+   - IView UI [iView / View Design 一套企业级 UI 组件库和前端解决方案 (iviewui.com)](https://www.iviewui.com/)
